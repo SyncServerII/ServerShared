@@ -3,5 +3,8 @@ public class ServerConstants {
     public static let XTokenTypeKey = "X-token-type"
     
     public static let HTTPOAuth2AccessTokenKey = "access_token"
+    
+    // Necessary for some authorization systems, e.g., Dropbox.
+    public static let HTTPAccountIdKey = "X-account-id"
 }
 
