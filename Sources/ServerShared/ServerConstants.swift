@@ -6,5 +6,15 @@ public class ServerConstants {
     
     // Necessary for some authorization systems, e.g., Dropbox.
     public static let HTTPAccountIdKey = "X-account-id"
+    
+    // HTTP: request header key
+    // Since the Device-UUID is a somewhat secure identifier, I'm passing it in the HTTP header. Plus, it makes the device UUID available early in request processing.
+    public static let httpRequestDeviceUUID = "SyncServer-Device-UUID"
+    
+    // Used for some Account types (e.g., Facebook)
+    public static let httpResponseOAuth2AccessTokenKey = "syncserver-access-token"
+    
+    // The value of this key is a "X.Y.Z" version string.
+    public static let httpResponseCurrentServerVersion = "syncserver-version"
 }
 
