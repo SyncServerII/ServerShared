@@ -16,5 +16,8 @@ public class ServerConstants {
     
     // The value of this key is a "X.Y.Z" version string.
     public static let httpResponseCurrentServerVersion = "syncserver-version"
+    
+    // Used when downloading a file to return parameters (as a HTTP header response header).
+    public static let httpResponseMessageParams = "syncserver-message-params"
 }
 
