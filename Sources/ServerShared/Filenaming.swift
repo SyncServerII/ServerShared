@@ -45,7 +45,7 @@ public struct Extension {
 #if !SERVER
 public struct FilenamingWithAppMetaDataVersion : Filenaming {
     public let fileUUID:String!
-    public let fileVersion:Int32!
+    public let fileVersion:FileVersionInt!
     public var appMetaDataVersion:AppMetaDataVersionInt?
 
     // The default member-wise initializer is not public. :(. See https://stackoverflow.com/questions/26224693/how-can-i-make-public-by-default-the-member-wise-initialiser-for-structs-in-swif
