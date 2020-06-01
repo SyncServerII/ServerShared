@@ -81,7 +81,7 @@ public class ServerEndpoints {
     
     // MARK: Files
     
-    // The Index serves as a kind of snapshot of the files and sharing groups on the server for the calling app. Not specifying a lock is held at this level because caller may not give a sharing group uuid. If the sharing group uuid is given, holds lock within the controller.
+    // The Index serves as a kind of snapshot of the files and sharing groups on the server for the calling app.
     public static let index = ServerEndpoint("Index", method: .get, requestMessageType: IndexRequest.self)
     
     public static let uploadFile = ServerEndpoint("UploadFile", method: .post, requestMessageType: UploadFileRequest.self, sharing: Sharing(minPermission: .write))
@@ -92,10 +92,8 @@ public class ServerEndpoints {
     public static let uploadDeletion = ServerEndpoint("UploadDeletion", method: .delete, requestMessageType: UploadDeletionRequest.self, sharing: Sharing(minPermission: .write))
 
     // TODO: *0* See also [1] in FileControllerTests.swift.
-    // Seems unlikely that the collection of uploads will change while we are getting them (because they are specific to the userId and the deviceUUID), but grab the lock just in case.
     public static let getUploads = ServerEndpoint("GetUploads", method: .get, requestMessageType: GetUploadsRequest.self, sharing: Sharing(minPermission: .write))
     
-    // Not using `needsLock` property here-- but doing the locking internally to the method: Because we have to access cloud storage to deal with upload deletions.
     public static let doneUploads = ServerEndpoint("DoneUploads", method: .post, requestMessageType: DoneUploadsRequest.self, sharing: Sharing(minPermission: .write))
 
     public static let downloadFile = ServerEndpoint("DownloadFile", method: .get, requestMessageType: DownloadFileRequest.self, sharing: Sharing(minPermission: .read))
@@ -112,10 +110,8 @@ public class ServerEndpoints {
     
     // This either (a) creates a sharing user account where the user does not exist yet on the system, or (b) redeems an invitation to join a sharing group for an existing user.
     // Only primary authentication because this method is used for case (a) to add a user into the database (i.e., it creates secondary authentication).
-    // This is locked in the server controller code-- we don't have a sharingGroupUUID in the request parameters.
     public static let redeemSharingInvitation = ServerEndpoint("RedeemSharingInvitation", method: .post, requestMessageType: RedeemSharingInvitationRequest.self, authenticationLevel: .primary)
 
-    // This doesn't need a lock-- it's for a new sharing group. However, I'm making sure in the implementation that the user owns cloud storage-- as a form of "permission".
     public static let createSharingGroup = ServerEndpoint("CreateSharingGroup", method: .post, requestMessageType: CreateSharingGroupRequest.self, authenticationLevel: .secondary)
 
     public static let updateSharingGroup = ServerEndpoint("UpdateSharingGroup", method: .patch, requestMessageType: UpdateSharingGroupRequest.self, authenticationLevel: .secondary, sharing: Sharing(minPermission: .admin))
@@ -136,15 +132,23 @@ public class ServerEndpoints {
         all.append(contentsOf: [
             ServerEndpoints.healthCheck,
         
-            ServerEndpoints.addUser, ServerEndpoints.checkCreds, ServerEndpoints.removeUser,
+            ServerEndpoints.addUser,
+            ServerEndpoints.checkCreds,
+            ServerEndpoints.removeUser,
         
-            ServerEndpoints.index, ServerEndpoints.uploadFile, ServerEndpoints.doneUploads, ServerEndpoints.getUploads, ServerEndpoints.uploadDeletion,
+            ServerEndpoints.index,
+            ServerEndpoints.uploadFile,
+            ServerEndpoints.doneUploads,
+            ServerEndpoints.downloadFile,
+            ServerEndpoints.getUploads,
+            ServerEndpoints.uploadDeletion,
         
             ServerEndpoints.createSharingInvitation,
             ServerEndpoints.getSharingInvitationInfo,
             ServerEndpoints.redeemSharingInvitation,
             
-            ServerEndpoints.createSharingGroup, ServerEndpoints.removeSharingGroup,
+            ServerEndpoints.createSharingGroup,
+            ServerEndpoints.removeSharingGroup,
             ServerEndpoints.updateSharingGroup,
             ServerEndpoints.removeUserFromSharingGroup,
             
