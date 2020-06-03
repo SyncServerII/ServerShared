@@ -16,7 +16,7 @@ import LoggerAPI
 /* If an attempt is made to upload the same file/version more than once, the second (or third etc.) attempts don't actually upload the file to cloud storage-- if we have an entry in the Uploads repository. The effect from the POV of the caller is same as if the file was uploaded. We don't consider this an error to help in error recovery.
 (We don't actually upload the file more than once to the cloud service because, for example, Google Drive doesn't play well with uploading the same named file more than once, and to help in error recovery, plus the design of the server only makes an Uploads entry if we have successfully uploaded the file to the cloud service.)
 */
-public class UploadFileRequest : RequestMessage, Filenaming {
+public class UploadFileRequest : RequestMessage {    
     required public init() {}
 
     // MARK: Properties for use in request message.
@@ -29,18 +29,11 @@ public class UploadFileRequest : RequestMessage, Filenaming {
     
     public var mimeType:String!
     
-    // If a file is already on the server, and you are uploading a new version, simply setting the appMetaData contents to nil will not reset the appMetaData on the server. It will just ignore the nil field and leave the appMetaData as it was on the last version of the file. To reset the appMetaData, explicitly set its contents to the empty string "".
-    // Set this to nil if you are not updating the app meta data.
-    public var appMetaData:AppMetaData?
-    
-    // Must be 0 (for a new file) or N+1 where N is the current version of the file on the server.
-    public var fileVersion:FileVersionInt!
+    // Only used in the v0 upload for a file.
+    public var appMetaData: String?
     
     // Typically this will remain false (or nil). Give it as true only when doing conflict resolution and the client indicates it wants to undelete a file because it's overriding a download deletion with its own file upload.
     public var undeleteServerFile:Bool?
-
-    // Overall version for files for the specific owning user; assigned by the server.
-    public var masterVersion:MasterVersionInt!
 
     public var sharingGroupUUID: String!
     
@@ -59,15 +52,13 @@ public class UploadFileRequest : RequestMessage, Filenaming {
         case fileGroupUUID
         case mimeType
         case appMetaData
-        case fileVersion
         case undeleteServerFile
-        case masterVersion
         case sharingGroupUUID
         case checkSum
     }
     
     public func valid() -> Bool {
-        guard fileUUID != nil && mimeType != nil && fileVersion != nil && masterVersion != nil && sharingGroupUUID != nil && checkSum != nil,
+        guard fileUUID != nil && mimeType != nil && sharingGroupUUID != nil && checkSum != nil,
             let _ = NSUUID(uuidString: self.fileUUID),
             let _ = NSUUID(uuidString: self.sharingGroupUUID) else {
             return false
@@ -91,9 +82,7 @@ public class UploadFileRequest : RequestMessage, Filenaming {
         AppMetaData.fromStringToDictionaryValue(dictionary: &result)
         
         // Unfortunate customization due to https://bugs.swift.org/browse/SR-5249
-        MessageDecoder.convert(key: UploadFileRequest.CodingKeys.fileVersion.rawValue, dictionary: &result) {FileVersionInt($0)}
         MessageDecoder.convertBool(key: UploadFileRequest.CodingKeys.undeleteServerFile.rawValue, dictionary: &result)
-        MessageDecoder.convert(key: UploadFileRequest.CodingKeys.masterVersion.rawValue, dictionary: &result) {MasterVersionInt($0)}
         return result
     }
 
@@ -140,18 +129,7 @@ public class UploadFileResponse : ResponseMessage {
     // This is the actual date/time of update of the file on the server.
     public var updateDate: Date?
     
-    // If the master version for the user on the server has been incremented, this key will be present in the response-- with the new value of the master version. The upload was not attempted in this case.
-    public var masterVersionUpdate:MasterVersionInt?
-    private static let masterVersionUpdateKey = "masterVersionUpdate"
-    
-    // Unfortunate customization due to https://bugs.swift.org/browse/SR-5249
-    private static func customConversions(dictionary: [String: Any]) -> [String: Any] {
-        var result = dictionary
-        MessageDecoder.convert(key: masterVersionUpdateKey, dictionary: &result) {MasterVersionInt($0)}
-        return result
-    }
-    
     public static func decode(_ dictionary: [String: Any]) throws -> UploadFileResponse {
-        return try MessageDecoder.decode(UploadFileResponse.self, from: customConversions(dictionary: dictionary))
+        return try MessageDecoder.decode(UploadFileResponse.self, from: dictionary)
     }
 }
