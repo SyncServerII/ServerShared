@@ -7,6 +7,10 @@ public class ServerConstants {
     // Necessary for some authorization systems, e.g., Dropbox.
     public static let HTTPAccountIdKey = "X-account-id"
     
+    // HTTP request header keys specific to Google
+    @available(*, deprecated, message: "Use: HTTPOAuth2AuthorizationCodeKey")
+    public static let GoogleHTTPServerAuthCodeKey = "SyncServer-Google-server-auth-code"
+    
     // HTTP: request header key
     // Since the Device-UUID is a somewhat secure identifier, I'm passing it in the HTTP header. Plus, it makes the device UUID available early in request processing.
     public static let httpRequestDeviceUUID = "SyncServer-Device-UUID"
