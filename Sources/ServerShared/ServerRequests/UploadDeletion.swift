@@ -11,7 +11,7 @@ import Foundation
 // This places a deletion request in the Upload table on the server. A DoneUploads request is subsequently required to actually perform the deletion in cloud storage.
 // An upload deletion can be repeated for the same file: This doesn't cause an error and doesn't duplicate rows in the Upload table.
 
-public class UploadDeletionRequest : RequestMessage, Filenaming {
+public class UploadDeletionRequest : RequestMessage {
     public required init() {
     }
     

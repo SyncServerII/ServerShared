@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class FileInfo : Codable, CustomStringConvertible, Filenaming, Hashable, Equatable {
+public class FileInfo : Codable, CustomStringConvertible, Hashable, Equatable {
     // For testing
     public init() {
     }

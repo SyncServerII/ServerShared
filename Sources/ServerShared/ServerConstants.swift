@@ -1,3 +1,5 @@
+import Foundation
+
 // These are shared with client apps
 
 public class ServerConstants {
