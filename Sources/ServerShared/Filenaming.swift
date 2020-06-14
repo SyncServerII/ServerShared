@@ -19,7 +19,7 @@ public enum MimeType: String {
     // This is really an error state. Use it with care.
     case unknown = "unknown"
     
-    var fileNameExtension: String {
+    public var fileNameExtension: String {
         switch self {
         case .text:
             return "txt"
