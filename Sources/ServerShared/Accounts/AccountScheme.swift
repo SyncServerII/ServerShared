@@ -1,6 +1,6 @@
 //
 //  AccountScheme.swift
-//  SyncServer-Shared
+//  ServerShared
 //
 //  Created by Christopher G Prince on 9/7/19.
 //
