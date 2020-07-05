@@ -41,6 +41,10 @@ public class UploadFileRequest : RequestMessage {
     // Only used on v0 file upload.
     public var checkSum:String!
     
+    // For index of count marking. Replaces DoneUploads endpoint.
+    public var uploadIndex: Int!
+    public var uploadCount: Int!
+    
     // MARK: Properties NOT used in the request message.
     
     public var data:Data!
@@ -56,10 +60,12 @@ public class UploadFileRequest : RequestMessage {
         case undeleteServerFile
         case sharingGroupUUID
         case checkSum
+        case uploadIndex
+        case uploadCount
     }
     
     public func valid() -> Bool {
-        guard fileUUID != nil && mimeType != nil && sharingGroupUUID != nil && checkSum != nil,
+        guard fileUUID != nil && mimeType != nil && sharingGroupUUID != nil && checkSum != nil, uploadIndex != nil, uploadCount != nil,
             let _ = NSUUID(uuidString: self.fileUUID),
             let _ = NSUUID(uuidString: self.sharingGroupUUID) else {
             return false
