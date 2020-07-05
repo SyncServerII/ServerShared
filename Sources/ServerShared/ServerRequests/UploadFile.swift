@@ -136,6 +136,9 @@ public class UploadFileResponse : ResponseMessage {
     // This is the actual date/time of update of the file on the server.
     public var updateDate: Date?
     
+    // Corresponds to the uploadCount and uploadIndex fields in the request and the implict DoneUploads.
+    public var allUploadsFinished: Bool!
+    
     public static func decode(_ dictionary: [String: Any]) throws -> UploadFileResponse {
         return try MessageDecoder.decode(UploadFileResponse.self, from: dictionary)
     }
