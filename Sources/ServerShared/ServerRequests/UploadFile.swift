@@ -43,8 +43,10 @@ public class UploadFileRequest : RequestMessage {
     
     // For index of count marking. Replaces DoneUploads endpoint.
     public var uploadIndex: Int!
+    private static let uploadIndexKey = "uploadIndex"
     public var uploadCount: Int!
-    
+    private static let uploadCountKey = "uploadCount"
+
     // MARK: Properties NOT used in the request message.
     
     public var data:Data!
@@ -90,6 +92,10 @@ public class UploadFileRequest : RequestMessage {
         
         // Unfortunate customization due to https://bugs.swift.org/browse/SR-5249
         MessageDecoder.convertBool(key: UploadFileRequest.CodingKeys.undeleteServerFile.rawValue, dictionary: &result)
+        
+        MessageDecoder.convert(key: uploadCountKey, dictionary: &result) {Int($0)}
+        MessageDecoder.convert(key: uploadIndexKey, dictionary: &result) {Int($0)}
+
         return result
     }
 
@@ -138,8 +144,18 @@ public class UploadFileResponse : ResponseMessage {
     
     // Corresponds to the uploadCount and uploadIndex fields in the request and the implict DoneUploads.
     public var allUploadsFinished: Bool!
+    private static let allUploadsFinishedKey = "allUploadsFinished"
+
+    private static func customConversions(dictionary: [String: Any]) -> [String: Any] {
+        var result = dictionary
+        
+        // Unfortunate customization due to https://bugs.swift.org/browse/SR-5249
+        MessageDecoder.convertBool(key: Self.allUploadsFinishedKey, dictionary: &result)
+
+        return result
+    }
     
     public static func decode(_ dictionary: [String: Any]) throws -> UploadFileResponse {
-        return try MessageDecoder.decode(UploadFileResponse.self, from: dictionary)
+        return try MessageDecoder.decode(UploadFileResponse.self, from: customConversions(dictionary: dictionary))
     }
 }
