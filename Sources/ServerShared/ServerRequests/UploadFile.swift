@@ -42,9 +42,9 @@ public class UploadFileRequest : RequestMessage {
     public var checkSum:String!
     
     // For index of count marking. Replaces DoneUploads endpoint.
-    public var uploadIndex: Int!
+    public var uploadIndex: Int32!
     private static let uploadIndexKey = "uploadIndex"
-    public var uploadCount: Int!
+    public var uploadCount: Int32!
     private static let uploadCountKey = "uploadCount"
 
     // MARK: Properties NOT used in the request message.
@@ -93,8 +93,8 @@ public class UploadFileRequest : RequestMessage {
         // Unfortunate customization due to https://bugs.swift.org/browse/SR-5249
         MessageDecoder.convertBool(key: UploadFileRequest.CodingKeys.undeleteServerFile.rawValue, dictionary: &result)
         
-        MessageDecoder.convert(key: uploadCountKey, dictionary: &result) {Int($0)}
-        MessageDecoder.convert(key: uploadIndexKey, dictionary: &result) {Int($0)}
+        MessageDecoder.convert(key: uploadCountKey, dictionary: &result) {Int32($0)}
+        MessageDecoder.convert(key: uploadIndexKey, dictionary: &result) {Int32($0)}
 
         return result
     }
