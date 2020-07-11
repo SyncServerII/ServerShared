@@ -139,7 +139,7 @@ public class UploadFileResponse : ResponseMessage {
     // This is the actual date/time of update of the file on the server.
     public var updateDate: Date?
     
-    public enum UploadsFinished: String, Codable {
+    public enum UploadsFinished: String, Codable, Equatable {
         case uploadsNotFinished
         case v0UploadsFinished
         case vNUploadsTransferPending
