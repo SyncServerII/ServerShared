@@ -36,6 +36,8 @@ public class FileInfo : Codable, CustomStringConvertible, Hashable, Equatable {
     public var appMetaDataVersion: AppMetaDataVersionInt?
     
     public var fileVersion: FileVersionInt!
+
+    public var v0UploadFileVersion: Bool!
     
     // OWNER
     public var owningUserId: UserId!
