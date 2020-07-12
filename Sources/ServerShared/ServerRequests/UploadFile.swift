@@ -149,16 +149,16 @@ public class UploadFileResponse : ResponseMessage {
     public var allUploadsFinished: UploadsFinished!
     private static let allUploadsFinishedKey = "allUploadsFinished"
 
-    private static func customConversions(dictionary: [String: Any]) -> [String: Any] {
-        var result = dictionary
-        
-        // Unfortunate customization due to https://bugs.swift.org/browse/SR-5249
-        MessageDecoder.convertBool(key: Self.allUploadsFinishedKey, dictionary: &result)
-
-        return result
-    }
+//    private static func customConversions(dictionary: [String: Any]) -> [String: Any] {
+//        var result = dictionary
+//
+//        // Unfortunate customization due to https://bugs.swift.org/browse/SR-5249
+//        MessageDecoder.convertBool(key: Self.allUploadsFinishedKey, dictionary: &result)
+//
+//        return result
+//    }
     
     public static func decode(_ dictionary: [String: Any]) throws -> UploadFileResponse {
-        return try MessageDecoder.decode(UploadFileResponse.self, from: customConversions(dictionary: dictionary))
+        return try MessageDecoder.decode(UploadFileResponse.self, from: dictionary)
     }
 }
