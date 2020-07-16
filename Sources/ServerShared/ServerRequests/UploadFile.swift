@@ -45,7 +45,7 @@ public class UploadFileRequest : RequestMessage {
     private static let uploadCountKey = "uploadCount"
     
     // Can be non-nil for v0 files only. Leave nil if files are static and changes cannot be applied.
-    var changeResolverName: String?
+    public var changeResolverName: String?
 
     // MARK: Properties NOT used in the request message.
     
