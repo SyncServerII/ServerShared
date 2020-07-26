@@ -93,8 +93,6 @@ public class ServerEndpoints {
 
     // TODO: *0* See also [1] in FileControllerTests.swift.
     public static let getUploads = ServerEndpoint("GetUploads", method: .get, requestMessageType: GetUploadsRequest.self, sharing: Sharing(minPermission: .write))
-    
-    public static let doneUploads = ServerEndpoint("DoneUploads", method: .post, requestMessageType: DoneUploadsRequest.self, sharing: Sharing(minPermission: .write))
 
     public static let downloadFile = ServerEndpoint("DownloadFile", method: .get, requestMessageType: DownloadFileRequest.self, sharing: Sharing(minPermission: .read))
     
@@ -138,7 +136,6 @@ public class ServerEndpoints {
         
             ServerEndpoints.index,
             ServerEndpoints.uploadFile,
-            ServerEndpoints.doneUploads,
             ServerEndpoints.downloadFile,
             ServerEndpoints.getUploads,
             ServerEndpoints.uploadDeletion,

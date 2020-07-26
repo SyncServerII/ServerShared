@@ -29,6 +29,7 @@ public class UploadFileRequest : RequestMessage {
     // Only used in the v0 upload for a file.
     public var appMetaData: String?
     
+    // DEPRECATED-- Remove.
     // Typically this will remain false (or nil). Give it as true only when doing conflict resolution and the client indicates it wants to undelete a file because it's overriding a download deletion with its own file upload.
     public var undeleteServerFile:Bool?
 
