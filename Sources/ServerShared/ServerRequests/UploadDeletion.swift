@@ -8,28 +8,21 @@
 
 import Foundation
 
-// This places a deletion request in the Upload table on the server. A DoneUploads request is subsequently required to actually perform the deletion in cloud storage.
-// An upload deletion can be repeated for the same file: This doesn't cause an error and doesn't duplicate rows in the Upload table.
+// When uploaded, this causes the file, or group of files, to be removed from cloud storage. The files are marked as deleted in the FileIndex.
+// An upload deletion request can be repeated for the same file/file group. This doesn't cause an error.
 
 public class UploadDeletionRequest : RequestMessage {
     public required init() {
     }
     
-    // The use of the Filenaming protocol here is to support the DEBUG `actualDeletion` parameter.
-    
     // MARK: Properties for use in request message.
     
-    public var fileUUID:String!
-    
-    // This must indicate the current version of the file in the FileIndex.
-    public var fileVersion:FileVersionInt!
-    private static let fileVersionKey = "fileVersion"
-    
-    // Overall version for files for the sharing group; assigned by the server.
-    public var masterVersion:MasterVersionInt!
-    private static let masterVersionKey = "masterVersion"
-
+    // *Must* be provided
     public var sharingGroupUUID: String!
+
+    // Exactly one of the following two *must* be provided. If the file has a file group, the file group *must* be provided*. In this case, you are requesting that all files in the file group are deleted. Otherwise, you are requesting that an individual file (which isn't in a file group) is deleted.
+    public var fileUUID:String!
+    public var fileGroupUUID: String!
 
 #if DEBUG
     // Enable the client to actually delete files-- for testing purposes. The UploadDeletionRequest will not queue the request, but instead deletes from both the FileIndex and from cloud storage.
@@ -38,7 +31,15 @@ public class UploadDeletionRequest : RequestMessage {
 #endif
 
     public func valid() -> Bool {
-        guard fileUUID != nil && fileVersion != nil && masterVersion != nil && sharingGroupUUID != nil else {
+        guard sharingGroupUUID != nil else {
+            return false
+        }
+        
+        guard fileUUID != nil || fileGroupUUID != nil else {
+            return false
+        }
+        
+        if fileUUID != nil && fileGroupUUID != nil {
             return false
         }
         
@@ -47,10 +48,7 @@ public class UploadDeletionRequest : RequestMessage {
     
     private static func customConversions(dictionary: [String: Any]) -> [String: Any] {
         var result = dictionary
-        
-        // Unfortunate customization due to https://bugs.swift.org/browse/SR-5249
-        MessageDecoder.convert(key: fileVersionKey, dictionary: &result) {FileVersionInt($0)}
-        MessageDecoder.convert(key: masterVersionKey, dictionary: &result) {MasterVersionInt($0)}
+
 #if DEBUG
         MessageDecoder.convertBool(key: actualDeletionKey, dictionary: &result)
 #endif
@@ -69,16 +67,8 @@ public class UploadDeletionResponse : ResponseMessage {
         return .json
     }
     
-    // If the master version for the user on the server has been incremented, this key will be present in the response-- with the new value of the master version. The upload deletion was not attempted in this case.
-    public var masterVersionUpdate:Int64?
-    private static let masterVersionUpdateKey = "masterVersionUpdate"
-
     private static func customConversions(dictionary: [String: Any]) -> [String: Any] {
-        var result = dictionary
-        
-        // Unfortunate customization due to https://bugs.swift.org/browse/SR-5249
-        MessageDecoder.convert(key: masterVersionUpdateKey, dictionary: &result) {MasterVersionInt($0)}
-
+        let result = dictionary
         return result
     }
 
