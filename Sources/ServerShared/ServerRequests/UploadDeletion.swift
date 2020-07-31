@@ -20,15 +20,9 @@ public class UploadDeletionRequest : RequestMessage {
     // *Must* be provided
     public var sharingGroupUUID: String!
 
-    // Exactly one of the following two *must* be provided. If the file has a file group, the file group *must* be provided*. In this case, you are requesting that all files in the file group are deleted. Otherwise, you are requesting that an individual file (which isn't in a file group) is deleted.
+    // Exactly one of the following two *must* be provided. If the file has a file group, only the file group *must* be provided*. In this case, you are requesting that all files in the file group are deleted. Otherwise, you are requesting that an individual file (which isn't in a file group, and hence has a nil fileGroupUUID) is deleted.
     public var fileUUID:String!
     public var fileGroupUUID: String!
-
-#if DEBUG
-    // Enable the client to actually delete files-- for testing purposes. The UploadDeletionRequest will not queue the request, but instead deletes from both the FileIndex and from cloud storage.
-    public var actualDeletion:Bool?
-    private static let actualDeletionKey = "actualDeletion"
-#endif
 
     public func valid() -> Bool {
         guard sharingGroupUUID != nil else {
@@ -47,11 +41,7 @@ public class UploadDeletionRequest : RequestMessage {
     }
     
     private static func customConversions(dictionary: [String: Any]) -> [String: Any] {
-        var result = dictionary
-
-#if DEBUG
-        MessageDecoder.convertBool(key: actualDeletionKey, dictionary: &result)
-#endif
+        let result = dictionary
         return result
     }
 
