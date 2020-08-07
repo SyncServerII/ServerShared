@@ -28,10 +28,6 @@ public class UploadFileRequest : RequestMessage {
     
     // Only used in the v0 upload for a file.
     public var appMetaData: String?
-    
-    // DEPRECATED-- Remove.
-    // Typically this will remain false (or nil). Give it as true only when doing conflict resolution and the client indicates it wants to undelete a file because it's overriding a download deletion with its own file upload.
-    public var undeleteServerFile:Bool?
 
     public var sharingGroupUUID: String!
     
@@ -60,7 +56,6 @@ public class UploadFileRequest : RequestMessage {
         case fileGroupUUID
         case mimeType
         case appMetaData
-        case undeleteServerFile
         case sharingGroupUUID
         case checkSum
         case uploadIndex
@@ -92,9 +87,7 @@ public class UploadFileRequest : RequestMessage {
         MessageDecoder.unescapeValues(dictionary: &result)
         AppMetaData.fromStringToDictionaryValue(dictionary: &result)
         
-        // Unfortunate customization due to https://bugs.swift.org/browse/SR-5249
-        MessageDecoder.convertBool(key: UploadFileRequest.CodingKeys.undeleteServerFile.rawValue, dictionary: &result)
-        
+        // Unfortunate customization due to https://bugs.swift.org/browse/SR-5249        
         MessageDecoder.convert(key: uploadCountKey, dictionary: &result) {Int32($0)}
         MessageDecoder.convert(key: uploadIndexKey, dictionary: &result) {Int32($0)}
 
