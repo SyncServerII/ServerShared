@@ -26,7 +26,7 @@ public class UploadFileRequest : RequestMessage {
     
     public var mimeType:String!
     
-    // Only used in the v0 upload for a file.
+    // Can only be used in the v0 upload for a file.
     public var appMetaData: String?
 
     public var sharingGroupUUID: String!

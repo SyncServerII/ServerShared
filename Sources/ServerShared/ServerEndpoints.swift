@@ -86,9 +86,6 @@ public class ServerEndpoints {
     
     public static let uploadFile = ServerEndpoint("UploadFile", method: .post, requestMessageType: UploadFileRequest.self, sharing: Sharing(minPermission: .write))
     
-    // Useful if only the app meta data has changed, so you don't have to re-upload the entire file.
-    public static let uploadAppMetaData = ServerEndpoint("UploadAppMetaData", method: .post, requestMessageType: UploadAppMetaDataRequest.self, sharing: Sharing(minPermission: .write))
-    
     public static let uploadDeletion = ServerEndpoint("UploadDeletion", method: .delete, requestMessageType: UploadDeletionRequest.self, sharing: Sharing(minPermission: .write))
 
     // TODO: *0* See also [1] in FileControllerTests.swift.
