@@ -13,7 +13,10 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/IBM-Swift/Kitura.git", from: "2.7.0"),
-        .package(url: "https://github.com/PerfectlySoft/Perfect.git", from: "3.1.4")
+        .package(url: "https://github.com/PerfectlySoft/Perfect.git", from: "3.1.4"),
+        
+        // TEST ONLY
+        .package(url: "https://github.com/IBM-Swift/HeliumLogger.git", .upToNextMajor(from: "1.8.1"))
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
@@ -23,6 +26,10 @@ let package = Package(
             dependencies: ["Kitura", "PerfectLib"]),
         .testTarget(
             name: "ServerSharedTests",
-            dependencies: ["ServerShared"]),
+            dependencies: ["ServerShared", "HeliumLogger"],
+            swiftSettings: [
+                .define("DEBUG", .when(platforms: nil, configuration: .debug)),
+                .define("SERVER")
+            ]),
     ]
 )

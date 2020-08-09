@@ -27,7 +27,7 @@ public class UploadFileRequest : RequestMessage {
     public var mimeType:String!
     
     // Can only be used in the v0 upload for a file.
-    public var appMetaData: String?
+    public var appMetaData: AppMetaData?
 
     public var sharingGroupUUID: String!
     
@@ -105,16 +105,29 @@ public class UploadFileRequest : RequestMessage {
 #endif
             return nil
         }
-        
+
         // It's easier to decode JSON than a string encoded Dictionary.
         if let appMetaData = appMetaData {
             let encoder = JSONEncoder()
-            guard let data = try? encoder.encode(appMetaData),
-                let appMetaDataJSONString = String(data: data, encoding: .utf8) else {
+            let data: Data
+            do {
+                data = try encoder.encode(appMetaData)
+            }
+            catch let error {
+#if SERVER
+                Log.error("Failed converting '\(appMetaData)' to data(): \(error)")
+#endif
                 return nil
             }
 
-            jsonDict[UploadFileRequest.CodingKeys.appMetaData.rawValue] = appMetaDataJSONString
+            guard let appMetaDataJSONString = String(data: data, encoding: .utf8) else {
+#if SERVER
+                Log.error("Failed converting data '\(appMetaData)' to string!")
+#endif
+                return nil
+            }
+
+            jsonDict[UploadFileRequest.CodingKeys.appMetaData.rawValue] = appMetaDataJSONString            
         }
 
         return urlParameters(dictionary: jsonDict)
