@@ -19,21 +19,14 @@ public class DownloadFileRequest : RequestMessage {
     public var fileUUID:String!
     
     // This must indicate the current version of the file in the FileIndex.
+    // Keeping this after the MasterVersion and other versioning has been removed because (a) internally, we continued to have file versions, and (b) I'm considering keeping some prior (garbage) versions of files to help enable downloads of entire file groups at once without race conditions.
     public var fileVersion:FileVersionInt!
     private static let fileVersionKey = "fileVersion"
     
     public var sharingGroupUUID:String!
-    
-    // This must indicate the current version of the app meta data for the file in the FileIndex (or nil if there is none yet).
-    public var appMetaDataVersion:AppMetaDataVersionInt?
-    private static let appMetaDataVersionKey = "appMetaDataVersion"
-
-    // Overall version for files for the specific user; assigned by the server.
-    public var masterVersion:MasterVersionInt!
-    private static let masterVersionKey = "masterVersion"
 
     public func valid() -> Bool {
-        guard fileUUID != nil && fileVersion != nil && masterVersion != nil && sharingGroupUUID != nil, let _ = NSUUID(uuidString: self.fileUUID) else {
+        guard fileUUID != nil && fileVersion != nil && sharingGroupUUID != nil, let _ = NSUUID(uuidString: self.fileUUID) else {
             return false
         }
         
@@ -45,8 +38,6 @@ public class DownloadFileRequest : RequestMessage {
         
         // Unfortunate customization due to https://bugs.swift.org/browse/SR-5249
         MessageDecoder.convert(key: fileVersionKey, dictionary: &result) {FileVersionInt($0)}
-        MessageDecoder.convert(key: masterVersionKey, dictionary: &result) {MasterVersionInt($0)}
-        MessageDecoder.convert(key: appMetaDataVersionKey, dictionary: &result) {AppMetaDataVersionInt($0)}
         
         return result
     }
@@ -73,9 +64,6 @@ public class DownloadFileResponse : ResponseMessage {
     
     // Did the contents of the file change while it was "at rest" in cloud storage? e.g., a user changed their file directly?
     public var contentsChanged:Bool!
-    
-    // If the master version for the user on the server has been incremented, this key will be present in the response-- with the new value of the master version. The download was not attempted in this case.
-    public var masterVersionUpdate:MasterVersionInt?
 
     // The file was gone and could not be downloaded. The string gives the GoneReason if non-nil, and the data, contentsChanged, and checkSum fields are not given.
     public var gone: String?
@@ -90,7 +78,6 @@ public class DownloadFileResponse : ResponseMessage {
         case cloudStorageType
         case checkSum
         case contentsChanged
-        case masterVersionUpdate
         case gone
     }
     
@@ -98,7 +85,6 @@ public class DownloadFileResponse : ResponseMessage {
         var result = dictionary
         
         // Unfortunate customization due to https://bugs.swift.org/browse/SR-5249
-        MessageDecoder.convert(key: DownloadFileResponse.CodingKeys.masterVersionUpdate.rawValue, dictionary: &result) {MasterVersionInt($0)}
         MessageDecoder.convertBool(key: DownloadFileResponse.CodingKeys.contentsChanged.rawValue, dictionary: &result)
         
         return result

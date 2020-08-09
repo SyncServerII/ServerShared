@@ -17,10 +17,6 @@ public struct ServerEndpoint {
     
     public static let sharingGroupUUIDKey = "sharingGroupUUID"
 
-    // For requests that adopt the MasterVersionUpdateRequest/MasterVersionUpdateResponse protocol.
-    public static let masterVersionKey = "masterVersion"
-    public static let masterVersionUpdateKey = "masterVersionUpdate"
-
     public let sharing: ServerEndpoints.Sharing?
 
     // Don't put a trailing "/" on the pathName.

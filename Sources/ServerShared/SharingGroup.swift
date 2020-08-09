@@ -22,9 +22,6 @@ public class SharingGroup : Codable {
     // Has this sharing group been deleted?
     public var deleted: Bool?
     
-    // The master version for the sharing group.
-    public var masterVersion:MasterVersionInt?
-    
     // When returned from an endpoint, gives the calling users permission for the sharing group.
     public var permission:Permission?
     
@@ -43,13 +40,3 @@ public class SharingGroupUser : Codable {
     // Present so that a client call omit themselves from a list of sharing group users presented in the UI.
     public var userId:UserId!
 }
-
-public protocol MasterVersionUpdateRequest: RequestMessage {
-    var masterVersion:MasterVersionInt! {get}
-}
-
-public protocol MasterVersionUpdateResponse: ResponseMessage {
-    // If the master version for the sharing group on the server had been previously incremented to a value different than the masterVersion value in the request, this key will be present in the response-- with the new value of the master version. The requested operation was not attempted in this case.
-    var masterVersionUpdate:MasterVersionInt? {get set}
-}
-

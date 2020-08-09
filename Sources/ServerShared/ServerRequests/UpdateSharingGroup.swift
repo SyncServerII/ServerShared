@@ -7,11 +7,8 @@
 
 import Foundation
 
-public class UpdateSharingGroupRequest : RequestMessage, MasterVersionUpdateRequest {
+public class UpdateSharingGroupRequest : RequestMessage {
     required public init() {}
-
-    public var masterVersion:MasterVersionInt!
-    private static let masterVersionKey = "masterVersion"
     
     // I'm having problems uploading complex objects in url parameters. So not sending a SharingGroup object yet. If I need to do this, looks like I'll have to use the request body and am not doing that yet.
     public var sharingGroupUUID:String!
@@ -19,14 +16,11 @@ public class UpdateSharingGroupRequest : RequestMessage, MasterVersionUpdateRequ
     public var sharingGroupName: String?
 
     public func valid() -> Bool {
-        return sharingGroupUUID != nil && sharingGroupName != nil && masterVersion != nil
+        return sharingGroupUUID != nil && sharingGroupName != nil
     }
     
    private static func customConversions(dictionary: [String: Any]) -> [String: Any] {
-        var result = dictionary
-    
-        // Unfortunate customization due to https://bugs.swift.org/browse/SR-5249
-        MessageDecoder.convert(key: masterVersionKey, dictionary: &result) {MasterVersionInt($0)}
+        let result = dictionary
         return result
     }
 
@@ -35,11 +29,8 @@ public class UpdateSharingGroupRequest : RequestMessage, MasterVersionUpdateRequ
     }
 }
 
-public class UpdateSharingGroupResponse : ResponseMessage, MasterVersionUpdateResponse {
+public class UpdateSharingGroupResponse : ResponseMessage {
     required public init() {}
-
-    public var masterVersionUpdate: MasterVersionInt?
-    private static let masterVersionUpdateKey = "masterVersionUpdate"
 
     public var responseType: ResponseType {
         return .json
@@ -47,8 +38,7 @@ public class UpdateSharingGroupResponse : ResponseMessage, MasterVersionUpdateRe
     
     // Unfortunate customization due to https://bugs.swift.org/browse/SR-5249
     private static func customConversions(dictionary: [String: Any]) -> [String: Any] {
-        var result = dictionary
-        MessageDecoder.convert(key: masterVersionUpdateKey, dictionary: &result) {MasterVersionInt($0)}
+        let result = dictionary
         return result
     }
     

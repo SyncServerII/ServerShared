@@ -45,7 +45,7 @@ public class RedeemSharingInvitationResponse : ResponseMessage {
     // Unfortunate customization due to https://bugs.swift.org/browse/SR-5249
     private static func customConversions(dictionary: [String: Any]) -> [String: Any] {
         var result = dictionary
-        MessageDecoder.convert(key: userIdKey, dictionary: &result) {MasterVersionInt($0)}
+        MessageDecoder.convert(key: userIdKey, dictionary: &result) {UserId($0)}
         return result
     }
     

@@ -7,23 +7,18 @@
 
 import Foundation
 
-public class RemoveUserFromSharingGroupRequest : RequestMessage, MasterVersionUpdateRequest {
+public class RemoveUserFromSharingGroupRequest : RequestMessage {
     required public init() {}
 
-    public var masterVersion: MasterVersionInt!
-    private static let masterVersionKey = "masterVersion"
     
     public var sharingGroupUUID:String!
 
     public func valid() -> Bool {
-        return sharingGroupUUID != nil && masterVersion != nil
+        return sharingGroupUUID != nil
     }
     
    private static func customConversions(dictionary: [String: Any]) -> [String: Any] {
-        var result = dictionary
-    
-        // Unfortunate customization due to https://bugs.swift.org/browse/SR-5249
-        MessageDecoder.convert(key: masterVersionKey, dictionary: &result) {MasterVersionInt($0)}
+        let result = dictionary
         return result
     }
 
@@ -32,11 +27,8 @@ public class RemoveUserFromSharingGroupRequest : RequestMessage, MasterVersionUp
     }
 }
 
-public class RemoveUserFromSharingGroupResponse : ResponseMessage, MasterVersionUpdateResponse {
+public class RemoveUserFromSharingGroupResponse : ResponseMessage {
     required public init() {}
-
-    public var masterVersionUpdate: MasterVersionInt?
-    private static let masterVersionUpdateKey = "masterVersionUpdate"
 
     public var responseType: ResponseType {
         return .json
@@ -44,8 +36,7 @@ public class RemoveUserFromSharingGroupResponse : ResponseMessage, MasterVersion
     
     // Unfortunate customization due to https://bugs.swift.org/browse/SR-5249
     private static func customConversions(dictionary: [String: Any]) -> [String: Any] {
-        var result = dictionary
-        MessageDecoder.convert(key: masterVersionUpdateKey, dictionary: &result) {MasterVersionInt($0)}
+        let result = dictionary
         return result
     }
     

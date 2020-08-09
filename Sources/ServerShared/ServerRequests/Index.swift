@@ -41,9 +41,6 @@ public class IndexResponse : ResponseMessage {
     
     // The following two are provided iff you gave a sharing group id in the request.
     
-    // The master version for the requested sharing group.
-    public var masterVersion:MasterVersionInt?
-    
     // The files in the requested sharing group.
     public var fileIndex:[FileInfo]?
     

@@ -7,23 +7,17 @@
 
 import Foundation
 
-public class RemoveSharingGroupRequest : RequestMessage, MasterVersionUpdateRequest {
+public class RemoveSharingGroupRequest : RequestMessage {
     required public init() {}
-
-    public var masterVersion: MasterVersionInt!
-    private static let masterVersionKey = "masterVersion"
     
     public var sharingGroupUUID:String!
     
     public func valid() -> Bool {
-        return sharingGroupUUID != nil && masterVersion != nil
+        return sharingGroupUUID != nil
     }
     
    private static func customConversions(dictionary: [String: Any]) -> [String: Any] {
-        var result = dictionary
-    
-        // Unfortunate customization due to https://bugs.swift.org/browse/SR-5249
-        MessageDecoder.convert(key: masterVersionKey, dictionary: &result) {MasterVersionInt($0)}
+        let result = dictionary
         return result
     }
 
@@ -32,11 +26,8 @@ public class RemoveSharingGroupRequest : RequestMessage, MasterVersionUpdateRequ
     }
 }
 
-public class RemoveSharingGroupResponse : ResponseMessage, MasterVersionUpdateResponse {
+public class RemoveSharingGroupResponse : ResponseMessage {
     required public init() {}
-
-    public var masterVersionUpdate: MasterVersionInt?
-    private static let masterVersionUpdateKey = "masterVersionUpdate"
 
     public var responseType: ResponseType {
         return .json
@@ -44,8 +35,7 @@ public class RemoveSharingGroupResponse : ResponseMessage, MasterVersionUpdateRe
     
     // Unfortunate customization due to https://bugs.swift.org/browse/SR-5249
     private static func customConversions(dictionary: [String: Any]) -> [String: Any] {
-        var result = dictionary
-        MessageDecoder.convert(key: masterVersionUpdateKey, dictionary: &result) {MasterVersionInt($0)}
+        let result = dictionary
         return result
     }
     

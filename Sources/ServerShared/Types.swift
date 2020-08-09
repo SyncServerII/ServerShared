@@ -8,7 +8,6 @@
 
 import Foundation
 
-public typealias MasterVersionInt = Int64
 public typealias FileVersionInt = Int32
 public typealias AppMetaDataVersionInt = Int32
 public typealias UserId = Int64
