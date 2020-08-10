@@ -14,22 +14,14 @@ public class DownloadAppMetaDataRequest : RequestMessage {
     
     public var fileUUID:String!
     
-    // This must indicate the current version in the FileIndex. Not allowing this to be nil because that would mean the appMetaData on the server would be nil, and what's the point of asking for that?
-    public var appMetaDataVersion:AppMetaDataVersionInt!
-    private static let appMetaDataVersionKey = "appMetaDataVersion"
-
     public var sharingGroupUUID: String!
     
     public func valid() -> Bool {
-        return fileUUID != nil && appMetaDataVersion != nil && sharingGroupUUID != nil
+        return fileUUID != nil && sharingGroupUUID != nil
     }
     
     private static func customConversions(dictionary: [String: Any]) -> [String: Any] {
-        var result = dictionary
-        
-        // Unfortunate customization due to https://bugs.swift.org/browse/SR-5249
-        MessageDecoder.convert(key: appMetaDataVersionKey, dictionary: &result) {AppMetaDataVersionInt($0)}
-
+        let result = dictionary
         return result
     }
 

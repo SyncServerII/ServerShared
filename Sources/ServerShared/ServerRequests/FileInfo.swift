@@ -31,9 +31,6 @@ public class FileInfo : Codable, CustomStringConvertible, Hashable, Equatable {
     public var mimeType: String?
     
     public var deleted:Bool! = false
-
-    // Optional because this will be nil if a file has no app meta data.
-    public var appMetaDataVersion: AppMetaDataVersionInt?
     
     public var fileVersion: FileVersionInt!
 
@@ -58,14 +55,13 @@ public class FileInfo : Codable, CustomStringConvertible, Hashable, Equatable {
             lhs.updateDate == rhs.updateDate &&
             lhs.mimeType == rhs.mimeType &&
             lhs.deleted == rhs.deleted &&
-            lhs.appMetaDataVersion == rhs.appMetaDataVersion &&
             lhs.fileVersion == rhs.fileVersion &&
             lhs.owningUserId == rhs.owningUserId &&
             lhs.cloudStorageType == rhs.cloudStorageType
     }
     
     public var description: String {
-        return "fileUUID: \(String(describing: fileUUID)); deviceUUID: \(String(describing: deviceUUID)); creationDate: \(String(describing: creationDate)); updateDate: \(String(describing: updateDate)); mimeTypeKey: \(String(describing: mimeType)); deleted: \(String(describing: deleted)); fileVersion: \(String(describing: fileVersion)); appMetaDataVersion: \(String(describing: appMetaDataVersion))"
+        return "fileUUID: \(String(describing: fileUUID)); deviceUUID: \(String(describing: deviceUUID)); creationDate: \(String(describing: creationDate)); updateDate: \(String(describing: updateDate)); mimeTypeKey: \(String(describing: mimeType)); deleted: \(String(describing: deleted)); fileVersion: \(String(describing: fileVersion))"
     }
 }
 
