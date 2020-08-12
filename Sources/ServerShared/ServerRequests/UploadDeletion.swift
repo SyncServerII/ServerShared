@@ -56,9 +56,14 @@ public class UploadDeletionResponse : ResponseMessage {
     public var responseType: ResponseType {
         return .json
     }
-    
+
+    // This field has a value that can be used in GetUploadResults.
+    public var deferredUploadId: Int64!
+    private static let deferredUploadIdKey = "deferredUploadId"
+
     private static func customConversions(dictionary: [String: Any]) -> [String: Any] {
-        let result = dictionary
+        var result = dictionary
+        MessageDecoder.convert(key: deferredUploadIdKey, dictionary: &result) {Int64($0)}
         return result
     }
 

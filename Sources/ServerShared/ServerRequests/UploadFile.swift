@@ -159,15 +159,18 @@ public class UploadFileResponse : ResponseMessage {
     // Corresponds to the uploadCount and uploadIndex fields in the request and the implict DoneUploads.
     public var allUploadsFinished: UploadsFinished!
     private static let allUploadsFinishedKey = "allUploadsFinished"
+    
+    // When allUploadsFinished is vNUploadsTransferPending, this field will have a value that can be used in GetUploadResults.
+    public var deferredUploadId: Int64?
+    private static let deferredUploadIdKey = "deferredUploadId"
 
-//    private static func customConversions(dictionary: [String: Any]) -> [String: Any] {
-//        var result = dictionary
-//
-//        // Unfortunate customization due to https://bugs.swift.org/browse/SR-5249
-//        MessageDecoder.convertBool(key: Self.allUploadsFinishedKey, dictionary: &result)
-//
-//        return result
-//    }
+    private static func customConversions(dictionary: [String: Any]) -> [String: Any] {
+        var result = dictionary
+
+        // Unfortunate customization due to https://bugs.swift.org/browse/SR-5249
+        MessageDecoder.convert(key: deferredUploadIdKey, dictionary: &result) {Int64($0)}
+        return result
+    }
     
     public static func decode(_ dictionary: [String: Any]) throws -> UploadFileResponse {
         return try MessageDecoder.decode(UploadFileResponse.self, from: dictionary)

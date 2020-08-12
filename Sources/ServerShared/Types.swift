@@ -86,3 +86,18 @@ public enum GoneReason: String {
     case fileRemovedOrRenamed
     case authTokenExpiredOrRevoked
 }
+
+public enum DeferredUploadStatus: String {
+    case pendingChange
+    case pendingDeletion
+    case completed
+    case error
+    
+    public var isPending: Bool {
+        return self == .pendingChange || self == .pendingDeletion
+    }
+    
+    public static var maxCharacterLength: Int {
+        return 20
+    }
+}
