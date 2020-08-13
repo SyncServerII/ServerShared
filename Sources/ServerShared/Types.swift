@@ -87,7 +87,7 @@ public enum GoneReason: String {
     case authTokenExpiredOrRevoked
 }
 
-public enum DeferredUploadStatus: String {
+public enum DeferredUploadStatus: String, Codable {
     case pendingChange
     case pendingDeletion
     case completed

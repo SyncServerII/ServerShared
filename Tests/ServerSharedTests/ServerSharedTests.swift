@@ -13,4 +13,32 @@ final class ServerSharedTests: XCTestCase {
             return
         }
     }
+    
+    func testGetUploadsResults() {
+        let request = GetUploadsResultsRequest()
+        request.deferredUploadId = 1
+        XCTAssert(request.valid())
+        
+        guard let params = request.urlParameters() else {
+            XCTFail()
+            return
+        }
+        
+        XCTAssert("deferredUploadId=1" == params)
+        
+        let status = DeferredUploadStatus.completed
+        let response = GetUploadsResultsResponse()
+        response.status = status
+        guard let dict = response.toDictionary else {
+            XCTFail()
+            return
+        }
+        
+        guard let resultStatus = dict[GetUploadsResultsResponse.statusKey] as? String else {
+            XCTFail()
+            return
+        }
+
+        XCTAssert(resultStatus == status.rawValue)
+    }
 }

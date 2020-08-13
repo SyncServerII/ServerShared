@@ -45,6 +45,9 @@ public class GetUploadsResultsResponse : ResponseMessage {
         return .json
     }
     
+    public var status:DeferredUploadStatus!
+    public static let statusKey = "status"
+    
     public static func decode(_ dictionary: [String: Any]) throws -> GetUploadsResponse {
         return try MessageDecoder.decode(GetUploadsResponse.self, from: dictionary)
     }
