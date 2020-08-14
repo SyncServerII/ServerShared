@@ -86,9 +86,6 @@ public class ServerEndpoints {
     
     public static let getUploadsResults = ServerEndpoint("GetUploadsResults", method: .get, requestMessageType: GetUploadsResultsRequest.self)
 
-    // TODO: *0* See also [1] in FileControllerTests.swift.
-    public static let getUploads = ServerEndpoint("GetUploads", method: .get, requestMessageType: GetUploadsRequest.self, sharing: Sharing(minPermission: .write))
-
     public static let downloadFile = ServerEndpoint("DownloadFile", method: .get, requestMessageType: DownloadFileRequest.self, sharing: Sharing(minPermission: .read))
     
     // Useful if only the app meta data has changed, so you don't have to re-download the entire file.
@@ -132,7 +129,6 @@ public class ServerEndpoints {
             ServerEndpoints.index,
             ServerEndpoints.uploadFile,
             ServerEndpoints.downloadFile,
-            ServerEndpoints.getUploads,
             ServerEndpoints.uploadDeletion,
             ServerEndpoints.getUploadsResults,
         
