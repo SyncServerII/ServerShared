@@ -116,6 +116,10 @@ public class ServerEndpoints {
     
     public static let registerPushNotificationToken = ServerEndpoint("RegisterPushNotificationToken", method: .post, requestMessageType: RegisterPushNotificationTokenRequest.self, authenticationLevel: .secondary)
 
+    public static let sendPushNotifications = ServerEndpoint("SendPushNotifications", method: .post, requestMessageType: SendPushNotificationsRequest.self, authenticationLevel: .secondary, sharing: Sharing(minPermission: .write))
+    
+    // SendPushNotifications
+
     public static let session = ServerEndpoints()
     
     private init() {
@@ -141,6 +145,7 @@ public class ServerEndpoints {
             ServerEndpoints.updateSharingGroup,
             ServerEndpoints.removeUserFromSharingGroup,
             
-            ServerEndpoints.registerPushNotificationToken])
+            ServerEndpoints.registerPushNotificationToken,
+            ServerEndpoints.sendPushNotifications])
     }
 }

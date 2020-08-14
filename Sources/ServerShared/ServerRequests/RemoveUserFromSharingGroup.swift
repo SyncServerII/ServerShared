@@ -10,7 +10,6 @@ import Foundation
 public class RemoveUserFromSharingGroupRequest : RequestMessage {
     required public init() {}
 
-    
     public var sharingGroupUUID:String!
 
     public func valid() -> Bool {

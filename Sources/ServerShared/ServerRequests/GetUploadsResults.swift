@@ -10,7 +10,7 @@ import Foundation
 import LoggerAPI
 #endif
 
-// Request the results of an upload file or upload deletion request.
+// Determine the status of asynchronous processing of upload file(s) or an upload deletion request.
 
 public class GetUploadsResultsRequest : RequestMessage {
     required public init() {}

@@ -7,6 +7,8 @@
 
 import Foundation
 
+// Request to rename a sharing group.
+
 public class UpdateSharingGroupRequest : RequestMessage {
     required public init() {}
     
