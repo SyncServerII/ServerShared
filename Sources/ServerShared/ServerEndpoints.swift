@@ -84,8 +84,7 @@ public class ServerEndpoints {
     
     public static let uploadDeletion = ServerEndpoint("UploadDeletion", method: .delete, requestMessageType: UploadDeletionRequest.self, sharing: Sharing(minPermission: .write))
     
-    // Write permissions because the only reason to use this is if you did a upload, and an upload requires write permission.
-    public static let getUploadsResults = ServerEndpoint("GetUploadsResults", method: .get, requestMessageType: GetUploadsRequest.self, sharing: Sharing(minPermission: .write))
+    public static let getUploadsResults = ServerEndpoint("GetUploadsResults", method: .get, requestMessageType: GetUploadsResultsRequest.self)
 
     // TODO: *0* See also [1] in FileControllerTests.swift.
     public static let getUploads = ServerEndpoint("GetUploads", method: .get, requestMessageType: GetUploadsRequest.self, sharing: Sharing(minPermission: .write))

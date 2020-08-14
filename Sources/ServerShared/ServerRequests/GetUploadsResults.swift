@@ -6,8 +6,9 @@
 //
 
 import Foundation
-
-import Foundation
+#if SERVER
+import LoggerAPI
+#endif
 
 // Request the results of an upload file or upload deletion request.
 
@@ -21,6 +22,9 @@ public class GetUploadsResultsRequest : RequestMessage {
     
     public func valid() -> Bool {
         guard deferredUploadId != nil else {
+#if SERVER
+            Log.error("Nil deferredUploadId")
+#endif
             return false
         }
         
@@ -45,10 +49,11 @@ public class GetUploadsResultsResponse : ResponseMessage {
         return .json
     }
     
-    public var status:DeferredUploadStatus!
+    // If no DeferredUpload record is found with the given deferredUploadId, this is returned as nil.
+    public var status:DeferredUploadStatus?
     public static let statusKey = "status"
     
-    public static func decode(_ dictionary: [String: Any]) throws -> GetUploadsResponse {
-        return try MessageDecoder.decode(GetUploadsResponse.self, from: dictionary)
+    public static func decode(_ dictionary: [String: Any]) throws -> GetUploadsResultsResponse {
+        return try MessageDecoder.decode(GetUploadsResultsResponse.self, from: dictionary)
     }
 }
