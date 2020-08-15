@@ -18,9 +18,13 @@ public class SendPushNotificationsRequest : RequestMessage {
     // MARK: Properties for use in request message.
     
     public var sharingGroupUUID:String!
+    
+    // Message to send as the push notification to members of the sharing group.
+    public static let messageKey = "message"
+    public var message:String!
 
     public func valid() -> Bool {
-        return sharingGroupUUID != nil
+        return sharingGroupUUID != nil && message != nil
     }
     
     private static func customConversions(dictionary: [String: Any]) -> [String: Any] {
@@ -29,7 +33,7 @@ public class SendPushNotificationsRequest : RequestMessage {
     }
 
     public static func decode(_ dictionary: [String: Any]) throws -> RequestMessage {
-        return try MessageDecoder.decode(GetUploadsResultsRequest.self, from: customConversions(dictionary: dictionary))
+        return try MessageDecoder.decode(Self.self, from: customConversions(dictionary: dictionary))
     }
 }
 
@@ -40,7 +44,7 @@ public class SendPushNotificationsResponse : ResponseMessage {
         return .json
     }
     
-    public static func decode(_ dictionary: [String: Any]) throws -> GetUploadsResultsResponse {
-        return try MessageDecoder.decode(GetUploadsResultsResponse.self, from: dictionary)
+    public static func decode(_ dictionary: [String: Any]) throws -> Self {
+        return try MessageDecoder.decode(Self.self, from: dictionary)
     }
 }
