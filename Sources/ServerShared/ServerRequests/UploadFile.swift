@@ -24,7 +24,8 @@ public class UploadFileRequest : RequestMessage {
     // If given, must be with version 0 of a file. Cannot be non-nil after version 0.
     public var fileGroupUUID:String?
     
-    public var mimeType:String!
+    // Must be present with v0 of file. Cannot be present after. Files must maintain their mimeType throughout their life.
+    public var mimeType:String?
     
     // Can only be used in the v0 upload for a file.
     public var appMetaData: AppMetaData?
@@ -64,7 +65,7 @@ public class UploadFileRequest : RequestMessage {
     }
     
     public func valid() -> Bool {
-        guard fileUUID != nil && mimeType != nil && sharingGroupUUID != nil && checkSum != nil, uploadIndex != nil, uploadCount != nil,
+        guard fileUUID != nil && sharingGroupUUID != nil && checkSum != nil, uploadIndex != nil, uploadCount != nil,
             let _ = NSUUID(uuidString: self.fileUUID),
             let _ = NSUUID(uuidString: self.sharingGroupUUID) else {
             return false
