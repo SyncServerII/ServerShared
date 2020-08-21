@@ -57,8 +57,8 @@ public class UploadDeletionResponse : ResponseMessage {
         return .json
     }
 
-    // This field has a value that can be used in GetUploadResults.
-    public var deferredUploadId: Int64!
+    // Upon an initial deletion request, this field has a value that can be used in GetUploadResults. If further requests are made for deletion of the same file, the request is successful, but this field will be nil.
+    public var deferredUploadId: Int64?
     private static let deferredUploadIdKey = "deferredUploadId"
 
     private static func customConversions(dictionary: [String: Any]) -> [String: Any] {

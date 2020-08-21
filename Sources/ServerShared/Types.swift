@@ -90,7 +90,10 @@ public enum GoneReason: String {
 public enum DeferredUploadStatus: String, Codable {
     case pendingChange
     case pendingDeletion
+    
+    // Either a deletion or a file upload was successfully completed, or an pload change removed because of conflicting deletion.
     case completed
+    
     case error
     
     public var isPending: Bool {
