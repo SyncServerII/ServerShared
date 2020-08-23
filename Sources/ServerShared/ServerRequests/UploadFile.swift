@@ -34,7 +34,7 @@ public class UploadFileRequest : RequestMessage {
     
     // The check sum for the file on the client *prior* to the upload. The specific meaning of this value depends on the specific cloud storage system. See `cloudStorageType`.
     // Only used on v0 file upload. Don't need to send this for vN, N > 0, uploads.
-    public var checkSum:String!
+    public var checkSum:String?
     
     // For index of count marking. Replaces DoneUploads endpoint.
     public var uploadIndex: Int32!
@@ -65,7 +65,7 @@ public class UploadFileRequest : RequestMessage {
     }
     
     public func valid() -> Bool {
-        guard fileUUID != nil && sharingGroupUUID != nil && checkSum != nil, uploadIndex != nil, uploadCount != nil,
+        guard fileUUID != nil && sharingGroupUUID != nil, uploadIndex != nil, uploadCount != nil,
             let _ = NSUUID(uuidString: self.fileUUID),
             let _ = NSUUID(uuidString: self.sharingGroupUUID) else {
             return false
