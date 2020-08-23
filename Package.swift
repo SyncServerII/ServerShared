@@ -10,6 +10,11 @@ let package = Package(
         .library(
             name: "ServerShared",
             targets: ["ServerShared"]),
+            
+        // May be able to get rid of this when I can conditionally have dependencies in this package dependent on platform
+        .library(
+            name: "iOSServerShared",
+            targets: ["iOSServerShared"]),
     ],
     dependencies: [
         .package(url: "https://github.com/IBM-Swift/Kitura.git", from: "2.7.0"),
@@ -25,6 +30,11 @@ let package = Package(
         .target(
             name: "ServerShared",
             dependencies: ["Kitura"]),
+            
+        // `#if os(Linux)` conditionals in the code make this different.
+        .target(
+            name: "iOSServerShared"),
+
         .testTarget(
             name: "ServerSharedTests",
             dependencies: ["ServerShared", "HeliumLogger"],

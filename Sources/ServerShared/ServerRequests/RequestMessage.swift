@@ -8,7 +8,7 @@
 
 import Foundation
 
-#if SERVER
+#if os(Linux)
 import Kitura
 import LoggerAPI
 #endif
@@ -20,7 +20,7 @@ public protocol RequestMessage : Codable {
 
     func valid() -> Bool
     
-#if SERVER
+#if os(Linux)
     func setup(request: RouterRequest) throws
 #endif
 
@@ -28,7 +28,7 @@ public protocol RequestMessage : Codable {
 }
 
 public extension RequestMessage {
-#if SERVER
+#if os(Linux)
     func setup(request: RouterRequest) throws {
     }
 #endif
@@ -53,7 +53,7 @@ public extension RequestMessage {
                     result += escapedNewKeyValue
                 }
                 else {
-#if SERVER
+#if os(Linux)
                     Log.error("Failed on escaping new key value: \(newURLParameter)")
 #endif
 #if DEBUG
@@ -73,7 +73,7 @@ public extension RequestMessage {
     
     func urlParameters() -> String? {
         guard let jsonDict = toDictionary else {
-#if SERVER
+#if os(Linux)
             Log.error("Could not convert toJSON()!")
 #endif
             return nil
