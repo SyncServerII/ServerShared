@@ -7,6 +7,9 @@
 //
 
 import Foundation
+#if os(Linux)
+import LoggerAPI
+#endif
 
 extension String {
     public func toJSONDictionary() -> [String:Any]? {
@@ -19,15 +22,15 @@ extension String {
         do {
             try json = JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions(rawValue: UInt(0)))
         } catch (let error) {
-            #if SERVER
-                Log.error(message: "Error in JSON conversion: \(error); self: \(self)")
+            #if os(Linux)
+                Log.error("Error in JSON conversion: \(error); self: \(self)")
             #endif
             return nil
         }
         
         guard let jsonDict = json as? [String:Any] else {
-            #if SERVER
-                Log.error(message: "Could not convert json to json Dict")
+            #if os(Linux)
+                Log.error("Could not convert json to json Dict")
             #endif
             return nil
         }
