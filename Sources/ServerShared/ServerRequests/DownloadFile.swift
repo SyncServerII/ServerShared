@@ -7,9 +7,6 @@
 //
 
 import Foundation
-#if SERVER
-import LoggerAPI
-#endif
 
 public class DownloadFileRequest : RequestMessage {
     required public init() {}

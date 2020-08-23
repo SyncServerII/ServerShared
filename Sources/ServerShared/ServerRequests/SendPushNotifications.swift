@@ -6,9 +6,6 @@
 //
 
 import Foundation
-#if SERVER
-import LoggerAPI
-#endif
 
 // Send a push notification to all members of a sharing group (except for the sender).
 

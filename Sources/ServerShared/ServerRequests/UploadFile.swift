@@ -8,11 +8,6 @@
 
 import Foundation
 
-#if SERVER
-import Kitura
-import LoggerAPI
-#endif
-
 public class UploadFileRequest : RequestMessage {    
     required public init() {}
 
@@ -74,14 +69,6 @@ public class UploadFileRequest : RequestMessage {
         return true
     }
 
-#if SERVER
-    public func setup(request: RouterRequest) throws {
-        var data = Data()
-        sizeOfDataInBytes = try request.read(into: &data)
-        self.data = data
-    }
-#endif
-
     private static func customConversions(dictionary: [String: Any]) -> [String: Any] {
         var result = dictionary
         
@@ -101,9 +88,6 @@ public class UploadFileRequest : RequestMessage {
     
     public func urlParameters() -> String? {
         guard var jsonDict = toDictionary else {
-#if SERVER
-            Log.error("Could not convert toJSON()!")
-#endif
             return nil
         }
 
@@ -114,17 +98,11 @@ public class UploadFileRequest : RequestMessage {
             do {
                 data = try encoder.encode(appMetaData)
             }
-            catch let error {
-#if SERVER
-                Log.error("Failed converting '\(appMetaData)' to data(): \(error)")
-#endif
+            catch {
                 return nil
             }
 
             guard let appMetaDataJSONString = String(data: data, encoding: .utf8) else {
-#if SERVER
-                Log.error("Failed converting data '\(appMetaData)' to string!")
-#endif
                 return nil
             }
 

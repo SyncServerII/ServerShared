@@ -6,9 +6,6 @@
 //
 
 import Foundation
-#if SERVER
-import LoggerAPI
-#endif
 
 class MessageEncoder {
     static func toDictionary<T>(encodable: T) -> [String: Any]? where T : Encodable {
@@ -48,9 +45,7 @@ public class MessageDecoder {
                 case "0":
                     dictionary[key] = false
                 default:
-#if SERVER
-                    Log.error("Error converting bool!")
-#endif
+                    break
                 }
             }
         }
@@ -74,9 +69,6 @@ public class MessageDecoder {
             let result = try decoder.decode(type, from: jsonData)
             return result
         } catch (let error) {
-            #if SERVER
-                Log.error("Error decoding: \(error)")
-            #endif
             throw error
         }
     }

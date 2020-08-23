@@ -6,9 +6,6 @@
 //
 
 import Foundation
-#if SERVER
-import LoggerAPI
-#endif
 
 // Determine the status of asynchronous processing of upload file(s) or an upload deletion request.
 
@@ -22,9 +19,6 @@ public class GetUploadsResultsRequest : RequestMessage {
     
     public func valid() -> Bool {
         guard deferredUploadId != nil else {
-#if SERVER
-            Log.error("Nil deferredUploadId")
-#endif
             return false
         }
         

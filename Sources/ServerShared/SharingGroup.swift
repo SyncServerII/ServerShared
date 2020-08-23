@@ -7,10 +7,6 @@
 
 import Foundation
 
-#if SERVER
-import Kitura
-#endif
-
 public class SharingGroup : Codable {
     public init() {}
     

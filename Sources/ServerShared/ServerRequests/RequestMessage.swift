@@ -8,11 +8,6 @@
 
 import Foundation
 
-#if os(Linux)
-import Kitura
-import LoggerAPI
-#endif
-
 public protocol RequestMessage : Codable {
     init()
     
@@ -20,18 +15,15 @@ public protocol RequestMessage : Codable {
 
     func valid() -> Bool
     
-#if os(Linux)
-    func setup(request: RouterRequest) throws
-#endif
+    // For server-side use only
+    func setup(routerRequest: Any) throws
 
     static func decode(_ dictionary: [String: Any]) throws -> RequestMessage
 }
 
 public extension RequestMessage {
-#if os(Linux)
-    func setup(request: RouterRequest) throws {
+    func setup(routerRequest: Any) throws {
     }
-#endif
 
     var toDictionary: [String: Any]? {
         return MessageEncoder.toDictionary(encodable: self)
@@ -53,9 +45,6 @@ public extension RequestMessage {
                     result += escapedNewKeyValue
                 }
                 else {
-#if os(Linux)
-                    Log.error("Failed on escaping new key value: \(newURLParameter)")
-#endif
 #if DEBUG
                     assert(false)
 #endif
@@ -73,9 +62,6 @@ public extension RequestMessage {
     
     func urlParameters() -> String? {
         guard let jsonDict = toDictionary else {
-#if os(Linux)
-            Log.error("Could not convert toJSON()!")
-#endif
             return nil
         }
         
