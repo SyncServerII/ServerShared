@@ -13,7 +13,6 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/IBM-Swift/Kitura.git", from: "2.7.0"),
-        .package(url: "https://github.com/PerfectlySoft/Perfect.git", from: "3.1.4"),
         
         // TEST ONLY
         .package(url: "https://github.com/IBM-Swift/HeliumLogger.git", .upToNextMajor(from: "1.8.1"))
@@ -23,7 +22,7 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages which this package depends on.
         .target(
             name: "ServerShared",
-            dependencies: ["Kitura", "PerfectLib"]),
+            dependencies: ["Kitura"]),
         .testTarget(
             name: "ServerSharedTests",
             dependencies: ["ServerShared", "HeliumLogger"],

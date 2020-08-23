@@ -7,9 +7,6 @@
 //
 
 import Foundation
-#if SERVER
-import PerfectLib
-#endif
 
 extension String {
     public func toJSONDictionary() -> [String:Any]? {
@@ -18,8 +15,6 @@ extension String {
         }
         
         var json:Any?
-        
-        // return (try? JSONSerialization.jsonObject(with: data, options: .allowFragments)).flatMap { $0 as? [String: Any] }
         
         do {
             try json = JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions(rawValue: UInt(0)))

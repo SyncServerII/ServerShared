@@ -74,15 +74,6 @@
         }
       },
       {
-        "package": "PerfectLib",
-        "repositoryURL": "https://github.com/PerfectlySoft/Perfect.git",
-        "state": {
-          "branch": null,
-          "revision": "5a08c2a596df23a3ae30b6ac9cb509a38384166c",
-          "version": "3.1.4"
-        }
-      },
-      {
         "package": "swift-log",
         "repositoryURL": "https://github.com/apple/swift-log.git",
         "state": {
