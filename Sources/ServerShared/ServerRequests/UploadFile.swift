@@ -8,7 +8,12 @@
 
 import Foundation
 
-public class UploadFileRequest : RequestMessage {    
+public protocol RequestingFileUpload {
+    var data:Data! {get set}
+    var sizeOfDataInBytes:Int! {get set}
+}
+
+public class UploadFileRequest : RequestMessage, RequestingFileUpload {    
     required public init() {}
 
     // MARK: Properties for use in request message.
@@ -44,7 +49,7 @@ public class UploadFileRequest : RequestMessage {
     
     public var data:Data!
     public var sizeOfDataInBytes:Int!
-    
+
     // Eliminate data and sizeOfDataIn bytes from Codable coding
     // See also https://stackoverflow.com/questions/44655562/how-to-exclude-properties-from-swift-4s-codable
     private enum CodingKeys: String, CodingKey {

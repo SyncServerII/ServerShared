@@ -14,17 +14,11 @@ public protocol RequestMessage : Codable {
     var toDictionary: [String: Any]? {get}
 
     func valid() -> Bool
-    
-    // For server-side use only
-    func setup(routerRequest: Any) throws
 
     static func decode(_ dictionary: [String: Any]) throws -> RequestMessage
 }
 
 public extension RequestMessage {
-    func setup(routerRequest: Any) throws {
-    }
-
     var toDictionary: [String: Any]? {
         return MessageEncoder.toDictionary(encodable: self)
     }
