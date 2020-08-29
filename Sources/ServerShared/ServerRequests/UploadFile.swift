@@ -129,6 +129,7 @@ public class UploadFileResponse : ResponseMessage {
     
     // 12/27/17; These two were added to the response. See https://github.com/crspybits/SharedImages/issues/44
     // This is the actual date/time of creation of the file on the server.
+    // Returned non-nil only with the v0 upload. With vN uploads, returned nil.
     public var creationDate: Date?
  
     // This is the actual date/time of update of the file on the server.
