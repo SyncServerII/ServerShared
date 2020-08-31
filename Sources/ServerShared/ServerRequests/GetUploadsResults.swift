@@ -43,7 +43,7 @@ public class GetUploadsResultsResponse : ResponseMessage {
         return .json
     }
     
-    // If no DeferredUpload record is found with the given deferredUploadId, this is returned as nil.
+    // If no DeferredUpload server record is found with the given deferredUploadId, this is returned as nil.
     public var status:DeferredUploadStatus?
     public static let statusKey = "status"
     

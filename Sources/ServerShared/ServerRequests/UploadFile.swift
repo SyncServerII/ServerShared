@@ -33,7 +33,7 @@ public class UploadFileRequest : RequestMessage, RequestingFileUpload {
     public var sharingGroupUUID: String!
     
     // The check sum for the file on the client *prior* to the upload. The specific meaning of this value depends on the specific cloud storage system. See `cloudStorageType`.
-    // Only used on v0 file upload. Don't need to send this for vN, N > 0, uploads.
+    // Required with v0 file uploads. Don't need to send this for vN, N > 0, uploads.
     public var checkSum:String?
     
     // For index of count marking. Replaces DoneUploads endpoint.
@@ -137,6 +137,7 @@ public class UploadFileResponse : ResponseMessage {
     
     public enum UploadsFinished: String, Codable, Equatable {
         case uploadsNotFinished
+        case duplicateFileUpload
         case v0UploadsFinished
         case vNUploadsTransferPending
     }
