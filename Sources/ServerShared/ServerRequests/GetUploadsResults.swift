@@ -7,7 +7,7 @@
 
 import Foundation
 
-// Determine the status of asynchronous processing of upload file(s) or an upload deletion request.
+// Determine the status of asynchronous processing of upload file(s) or an upload deletion request. This request does *not* remove the deferred upload record from the database. E.g., You should be able to call this request multiple times and get the same result.
 
 public class GetUploadsResultsRequest : RequestMessage {
     required public init() {}
