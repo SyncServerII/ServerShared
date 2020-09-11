@@ -41,4 +41,29 @@ final class ServerSharedTests: XCTestCase {
 
         XCTAssert(resultStatus == status.rawValue)
     }
+    
+    func testSynchronizedThrows() throws {
+        enum TestError: Error {
+            case test
+        }
+        
+        let block = Synchronized()
+
+        do {
+            try block.sync {
+                throw TestError.test
+            }
+        } catch {
+            return
+        }
+        XCTFail()
+    }
+
+    func testSynchronizedNoThrows() {
+        let block = Synchronized()
+        
+        block.sync {
+            print("Other Stuff")
+        }
+    }
 }
