@@ -13,6 +13,8 @@ public protocol RequestingFileUpload {
     var sizeOfDataInBytes:Int! {get set}
 }
 
+// Upload files and for v0 files tacitly creates new file groups. A new file group is created when you: (a) upload a v0 file and (b) give a new fileGroupUUID. A new fileGroupUUID is one not used for any prior v0 upload.
+
 public class UploadFileRequest : RequestMessage, RequestingFileUpload {    
     required public init() {}
 
@@ -23,6 +25,10 @@ public class UploadFileRequest : RequestMessage, RequestingFileUpload {
     
     // If given, must be with version 0 of a file. Cannot be non-nil after version 0.
     public var fileGroupUUID:String?
+    
+    // The type of object represented by a group of files.
+    // If a fileGroupUUID is given (i.e., for a v0 upload), this must also be given. Cannot be given after version 0.
+    public var objectType: String?
     
     // Must be present with v0 of file. Cannot be present after. Files must maintain their mimeType throughout their life.
     public var mimeType:String?
@@ -62,6 +68,7 @@ public class UploadFileRequest : RequestMessage, RequestingFileUpload {
         case uploadIndex
         case uploadCount
         case changeResolverName
+        case objectType
     }
     
     public func valid() -> Bool {
@@ -69,6 +76,21 @@ public class UploadFileRequest : RequestMessage, RequestingFileUpload {
             let _ = NSUUID(uuidString: self.fileUUID),
             let _ = NSUUID(uuidString: self.sharingGroupUUID) else {
             return false
+        }
+        
+        if let fileGroupUUID = fileGroupUUID {
+            guard let _ = NSUUID(uuidString: fileGroupUUID) else {
+                return false
+            }
+            
+            guard let objectType = objectType else {
+                return false
+            }
+            
+            guard objectType.count > 0,
+                objectType.count <= FileGroup.maxLengthObjectTypeName else {
+                return false
+            }
         }
         
         return true
