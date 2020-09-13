@@ -20,6 +20,7 @@ public class FileInfo : Codable, CustomStringConvertible, Hashable, Equatable {
     public var fileUUID: String!
     public var deviceUUID: String?
     public var fileGroupUUID: String?
+    public var objectType: String?
     public var sharingGroupUUID:String!
 
     // The creation & update dates are not used on upload-- they are established from dates on the server so they are not dependent on possibly mis-behaving clients.
@@ -50,6 +51,7 @@ public class FileInfo : Codable, CustomStringConvertible, Hashable, Equatable {
         return lhs.fileUUID == rhs.fileUUID &&
             lhs.deviceUUID == rhs.deviceUUID &&
             lhs.fileGroupUUID == rhs.fileGroupUUID &&
+            lhs.objectType == rhs.objectType &&
             lhs.sharingGroupUUID == rhs.sharingGroupUUID &&
             lhs.creationDate == rhs.creationDate &&
             lhs.updateDate == rhs.updateDate &&
