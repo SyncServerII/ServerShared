@@ -38,7 +38,7 @@ public class UploadFileRequest : RequestMessage, RequestingFileUpload {
 
     public var sharingGroupUUID: String!
     
-    // The check sum for the file on the client *prior* to the upload. The specific meaning of this value depends on the specific cloud storage system. See `cloudStorageType`.
+    // The check sum for the file on the client *prior* to the upload. The specific meaning of this value depends on the specific cloud storage system. See `cloudStorageType`. And for sharing accounts, this is computed dependent on the specific cloud storage system of the inviting account (or the transitive evaluation of that-- if a sharing account invited the sharing account).
     // Required with v0 file uploads. Don't need to send this for vN, N > 0, uploads.
     public var checkSum:String?
     

@@ -4,7 +4,7 @@ import Foundation
 public enum Partition {    
     public static func array<E, P: Comparable>(_ array: [E], using keyPath: KeyPath<E, P>) -> [[E]] {
         guard array.count > 0 else {
-            return [[]]
+            return []
         }
 
         let sorted = array.sorted { du1, du2  in
@@ -43,7 +43,7 @@ public enum Partition {
     public static func array<E, P: Comparable>(_ array: [E], using keyPath: KeyPath<E, P?>) -> [[E]] {
     
         guard array.count > 0 else {
-            return [[]]
+            return []
         }
         
         // Each sub-array has the same value for keyPath
