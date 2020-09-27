@@ -33,8 +33,12 @@ public class AddUserResponse : ResponseMessage {
     required public init() {}
 
     // Present only as means to help clients uniquely identify users. This is *never* passed back to the server. This id is unique across all users and is not specific to any sign-in type (e.g., Google).
-    public var userId:UserId!
+    public var userId:UserId?
     private static let userIdKey = "userId"
+    
+    // If the already exists prior the addUser request, then this is returned with the value true and `userId` is nil.
+    public var userAlreadyExisted:Bool?
+    private static let userAlreadyExistedKey = "userAlreadyExisted"
 
     public var responseType: ResponseType {
         return .json
@@ -45,7 +49,8 @@ public class AddUserResponse : ResponseMessage {
         
         // Unfortunate customization due to https://bugs.swift.org/browse/SR-5249
         MessageDecoder.convert(key: userIdKey, dictionary: &result) {UserId($0)}
-        
+        MessageDecoder.convert(key: userAlreadyExistedKey, dictionary: &result) {Bool($0)}
+
         return result
     }
 
