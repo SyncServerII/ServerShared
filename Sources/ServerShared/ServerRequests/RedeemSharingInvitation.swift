@@ -8,6 +8,8 @@
 
 import Foundation
 
+// Create a new user as part of redeeming a sharing invitation, or redeem an invitation for an existing user.
+
 // A 403 HTTP status code (forbidden) is given as the response if a social user (e.g., Facebook) attempts to redeem a sharing invitation for which social users are not allowed.
 
 public class RedeemSharingInvitationRequest : RequestMessage {
@@ -33,6 +35,7 @@ public class RedeemSharingInvitationResponse : ResponseMessage {
     required public init() {}
 
     // Present only as means to help clients uniquely identify users. This is *never* passed back to the server. This id is unique across all users and is not specific to any sign-in type (e.g., Google).
+    // This is present in both the case of adding a new user and redeeming the invitation by an existing user.
     public var userId:UserId!
     private static let userIdKey = "userId"
 
