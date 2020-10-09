@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum MimeType: String {
+public enum MimeType: String, Codable {
     case text = "text/plain"
     case jpeg = "image/jpeg"
     
