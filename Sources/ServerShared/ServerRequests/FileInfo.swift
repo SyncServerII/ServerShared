@@ -44,6 +44,8 @@ public class FileInfo : Codable, CustomStringConvertible, Hashable, Equatable {
     
     public var appMetaData: String?
     public var changeResolverName: String?
+    
+    public var fileLabel: String?
 
     // Only testing fileUUID
     public static func ==(lhs: FileInfo, rhs: FileInfo) -> Bool {
@@ -64,7 +66,8 @@ public class FileInfo : Codable, CustomStringConvertible, Hashable, Equatable {
             lhs.owningUserId == rhs.owningUserId &&
             lhs.cloudStorageType == rhs.cloudStorageType &&
             lhs.appMetaData == rhs.appMetaData &&
-            lhs.changeResolverName == rhs.changeResolverName
+            lhs.changeResolverName == rhs.changeResolverName &&
+            lhs.fileLabel == rhs.fileLabel
     }
     
     public var description: String {
