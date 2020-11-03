@@ -50,6 +50,8 @@ public class UploadFileRequest : RequestMessage, RequestingFileUpload {
     
     // Can be non-nil for v0 files only. Leave nil if files are static and changes cannot be applied.
     public var changeResolverName: String?
+    
+    public var fileLabel: String?
 
     // MARK: Properties NOT used in the request message.
     
@@ -69,6 +71,7 @@ public class UploadFileRequest : RequestMessage, RequestingFileUpload {
         case uploadCount
         case changeResolverName
         case objectType
+        case fileLabel
     }
     
     public func valid() -> Bool {
