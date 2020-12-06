@@ -16,6 +16,8 @@ public enum MimeType: String, Codable {
     // A more standard url mime type is https://tools.ietf.org/html/rfc2483#section-5 but I want to use a file format that can easily be launched in Windows and Mac OS.
     case url = "application/x-url"
     
+    case mov = "video/quicktime"
+    
     // This is really an error state. Use it with care.
     case unknown = "unknown"
     
@@ -27,6 +29,9 @@ public enum MimeType: String, Codable {
             return "jpg"
         case .url:
             return "url"
+        case .mov:
+            return "mov"
+            
         case .unknown:
             return Self.unknownExtension
         }
