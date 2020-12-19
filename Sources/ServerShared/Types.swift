@@ -33,7 +33,7 @@ public enum AuthenticationLevel {
     case secondary // must also have a record of user in our database tables
 }
 
-public enum Permission : String, Codable {
+public enum Permission : String, Codable, CaseIterable {
     case read // aka download
     case write // aka upload; includes read
     case admin // read, write, and invite
@@ -58,7 +58,7 @@ public enum Permission : String, Codable {
         }
     }
     
-    public func userFriendlyText() -> String {
+    private func displaytext() -> String {
         switch self {
         case .read:
             return "Read-only"
@@ -67,6 +67,25 @@ public enum Permission : String, Codable {
         case .admin:
             return "Read, Change, & Invite"
         }
+    }
+    
+    @available(*, deprecated, message: "Use `displayableText`")
+    public func userFriendlyText() -> String {
+        return displaytext()
+    }
+    
+    public var displayableText: String {
+        return displaytext()
+    }
+    
+    public static func from(_ displayableText: String) -> Permission? {
+        for permission in Permission.allCases {
+            if permission.displayableText == displayableText {
+                return permission
+            }
+        }
+        
+        return nil
     }
 }
 
