@@ -8,14 +8,9 @@
 
 import Foundation
 
-public protocol RequestingFileUpload {
-    var data:Data! {get set}
-    var sizeOfDataInBytes:Int! {get set}
-}
-
 // Upload files and for v0 files tacitly creates new file groups. A new file group is created when you: (a) upload a v0 file and (b) give a new fileGroupUUID. A new fileGroupUUID is one not used for any prior v0 upload.
 
-public class UploadFileRequest : RequestMessage, RequestingFileUpload {    
+public class UploadFileRequest : RequestMessage, NeedingRequestBodyData {    
     required public init() {}
 
     // MARK: Properties for use in request message.
