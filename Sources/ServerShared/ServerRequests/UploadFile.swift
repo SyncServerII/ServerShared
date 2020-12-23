@@ -48,7 +48,7 @@ public class UploadFileRequest : RequestMessage, NeedingRequestBodyData {
     
     public var fileLabel: String?
 
-    // MARK: Properties NOT used in the request message.
+    // MARK: Properties NOT used by the client in the request message. The request body is copied into these by the server.
     
     public var data:Data!
     public var sizeOfDataInBytes:Int!
