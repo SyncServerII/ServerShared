@@ -11,6 +11,7 @@ import Foundation
 public enum MimeType: String, Codable, CaseIterable {
     case text = "text/plain"
     case jpeg = "image/jpeg"
+    case png = "image/png"
     
     // A file with a .url extension with the format https://fileinfo.com/extension/url
     // A more standard url mime type is https://tools.ietf.org/html/rfc2483#section-5 but I want to use a file format that can easily be launched in Windows and Mac OS.
@@ -27,6 +28,8 @@ public enum MimeType: String, Codable, CaseIterable {
             return "txt"
         case .jpeg:
             return "jpg"
+        case .png:
+            return "png"
         case .url:
             return "url"
         case .mov:
