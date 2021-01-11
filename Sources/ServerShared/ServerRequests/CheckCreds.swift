@@ -23,26 +23,29 @@ public class CheckCredsRequest : RequestMessage {
 }
 
 public class CheckCredsResponse : ResponseMessage {
+    public struct UserInfo: Codable {
+        // Present only as means to help clients uniquely identify users. This is *never* passed back to the server. This id is unique across all users and is not specific to any sign-in type (e.g., Google).
+        public let userId:UserId
+        
+        // Some credentials need this client side. E.g., Apple Sign In.
+        public let fullUserName: String?
+        
+        public init(userId:UserId, fullUserName: String?) {
+            self.userId = userId
+            self.fullUserName = fullUserName
+        }
+    }
+    
     required public init() {}
 
-    // Present only as means to help clients uniquely identify users. This is *never* passed back to the server. This id is unique across all users and is not specific to any sign-in type (e.g., Google).
-    public var userId:UserId!
-    private static let userIdKey = "userId"
+    private static let userInfoKey = "userInfo"
+    public var userInfo: UserInfo!
 
     public var responseType: ResponseType {
         return .json
     }
-    
-    private static func customConversions(dictionary: [String: Any]) -> [String: Any] {
-        var result = dictionary
-        
-        // Unfortunate customization due to https://bugs.swift.org/browse/SR-5249
-        MessageDecoder.convert(key: userIdKey, dictionary: &result) {UserId($0)}
-        
-        return result
-    }
 
     public static func decode(_ dictionary: [String: Any]) throws -> CheckCredsResponse {
-        return try MessageDecoder.decode(CheckCredsResponse.self, from: customConversions(dictionary: dictionary))
+        return try MessageDecoder.decode(CheckCredsResponse.self, from: dictionary)
     }
 }
