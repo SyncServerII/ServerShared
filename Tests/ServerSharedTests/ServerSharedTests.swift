@@ -66,4 +66,43 @@ final class ServerSharedTests: XCTestCase {
             print("Other Stuff")
         }
     }
+    
+    func testCreateSharingInvitationRequestWithExpiryDuration() {
+        let expiry: TimeInterval = 1020
+
+        let request = CreateSharingInvitationRequest()
+        request.sharingGroupUUID = UUID().uuidString
+        request.numberOfAcceptors = 1
+        request.permission = .admin
+        request.expiryDuration = expiry
+        
+        guard request.valid() else {
+            XCTFail()
+            return
+        }
+        
+        guard let params = request.toDictionary else {
+            XCTFail()
+            return
+        }
+        
+        guard let obtainedExpiry = params[CreateSharingInvitationRequest.CodingKeys.expiryDuration.rawValue] as? TimeInterval else {
+            XCTFail()
+            return
+        }
+        
+        XCTAssert(obtainedExpiry == expiry)
+    }
+    
+    func testCreateSharingInvitationRequestWithoutExpiryDuration() {
+        let request = CreateSharingInvitationRequest()
+        request.sharingGroupUUID = UUID().uuidString
+        request.numberOfAcceptors = 1
+        request.permission = .admin
+        
+        guard request.valid() else {
+            XCTFail()
+            return
+        }
+    }
 }

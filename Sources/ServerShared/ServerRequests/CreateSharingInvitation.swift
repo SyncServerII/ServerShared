@@ -53,11 +53,15 @@ public class CreateSharingInvitationRequest : RequestMessage {
     // The sharing group to which user(s) are being invited. The inviting user must have admin permissions in this group.
     public var sharingGroupUUID:String!
     
-    private enum CodingKeys: String, CodingKey {
+    // If not given (nil), then the `ServerConstants.sharingInvitationExpiryDuration` value is used.
+    public var expiryDuration:TimeInterval?
+    
+    enum CodingKeys: String, CodingKey {
         case permission
         case _allowSocialAcceptance = "allowSocialAcceptance"
         case _numberOfAcceptors = "numberOfAcceptors"
         case sharingGroupUUID
+        case expiryDuration
     }
     
     public func valid() -> Bool {
@@ -70,6 +74,7 @@ public class CreateSharingInvitationRequest : RequestMessage {
         // Unfortunate customization due to https://bugs.swift.org/browse/SR-5249
         MessageDecoder.convertBool(key: CreateSharingInvitationRequest.CodingKeys._allowSocialAcceptance.rawValue, dictionary: &result)
         MessageDecoder.convert(key: CreateSharingInvitationRequest.CodingKeys._numberOfAcceptors.rawValue, dictionary: &result) {UInt($0)}
+        MessageDecoder.convert(key: CreateSharingInvitationRequest.CodingKeys.expiryDuration.rawValue, dictionary: &result) {TimeInterval($0)}
         return result
     }
 
