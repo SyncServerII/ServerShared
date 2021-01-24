@@ -1,4 +1,7 @@
 ServerShared
 	
+Version 0.0.4 (1/23/21)
+    Starting beta testing
+
 Version 0.0.3 (12/24/20)
 	Basic functionality working.
