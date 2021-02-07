@@ -1,5 +1,8 @@
 ServerShared
-	
+
+Version 0.1.0 (2/6/21)
+    Add Update User endpoint.
+    
 Version 0.0.4 (1/23/21)
     Starting beta testing
 

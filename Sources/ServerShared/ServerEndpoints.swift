@@ -67,6 +67,9 @@ public class ServerEndpoints {
 #endif
 
     public static let checkCreds = ServerEndpoint("CheckCreds", method: .get, requestMessageType: CheckCredsRequest.self)
+
+    // Update a user's properties.
+    public static let updateUser = ServerEndpoint("UpdateUser", method: .post, requestMessageType: UpdateUserRequest.self)
     
     // This creates a "root" owning user account for a sharing group of users. The user must not exist yet on the system.
     // Only primary authentication because this method is used to add a user into the database (i.e., it creates secondary authentication).
@@ -128,6 +131,7 @@ public class ServerEndpoints {
         
             ServerEndpoints.addUser,
             ServerEndpoints.checkCreds,
+            ServerEndpoints.updateUser,
             ServerEndpoints.removeUser,
         
             ServerEndpoints.index,
