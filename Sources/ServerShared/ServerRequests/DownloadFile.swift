@@ -59,7 +59,7 @@ public class DownloadFileResponse : ResponseMessage {
     // The check sum for the file currently stored in cloud storage. The specific meaning of this value depends on the specific cloud storage system. See `cloudStorageType`. This can be used by clients to assess if there was an error in transmitting the file contents across the network. i.e., does this checksum match what is computed by the client after the file is downloaded?
     public var checkSum:String!
     
-    // Did the contents of the file change while it was "at rest" in cloud storage? e.g., a user changed their file directly?
+    // Did the contents of the file change while it was "at rest" in cloud storage? e.g., a user changed their file directly? Also, this will be true if you are downloading a stale file version. i.e., if the file version in the index is N and you are downloading version M, N > M.
     public var contentsChanged:Bool!
 
     // The file was gone and could not be downloaded. The string gives the GoneReason if non-nil, and the data, contentsChanged, and checkSum fields are not given.
