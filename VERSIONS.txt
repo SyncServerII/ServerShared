@@ -1,5 +1,8 @@
 ServerShared
 
+Version 0.2.0 (2/21/21)
+    Added file group summary.
+    
 Version 0.1.0 (2/6/21)
     Add Update User endpoint.
     
