@@ -26,6 +26,21 @@ public class SharingGroup : Codable {
 
     // When returned from an endpoint, for a sharing user, gives the calling users "owning" or "parent" users cloud storage type, or null if an owning user.
     public var cloudStorageType: String?
+    
+    // A summary of the sharing group contents, per file group contained in the sharing group.
+    public var contentsSummary:[FileGroupSummary]?
+}
+
+public class FileGroupSummary: Codable {
+    public init() {}
+    
+    public var fileGroupUUID: String!
+    
+    // Of the file dates (both creationDate and updateDate), this gives the most recent date across all files in the file group. Not given if the file group has been deleted.
+    public var mostRecentDate: Date?
+    
+    // Has the file group been deleted?
+    public var deleted: Bool!
 }
 
 public class SharingGroupUser : Codable {

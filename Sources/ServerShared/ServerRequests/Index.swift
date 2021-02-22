@@ -39,12 +39,10 @@ public class IndexResponse : ResponseMessage {
         return .json
     }
     
-    // The following two are provided iff you gave a sharing group id in the request.
-    
-    // The files in the requested sharing group.
+    // The files in the requested sharing group. This is returned only if you gave a sharing group id in the request.
     public var fileIndex:[FileInfo]?
     
-    // The sharing groups in which this user is a member.
+    // The sharing groups in which this user is a member. Each `SharingGroup` has a `contentsSummary` only if you did *not* give a sharing group id in the request.
     public var sharingGroups:[SharingGroup]!
     
     public static func decode(_ dictionary: [String: Any]) throws -> IndexResponse {
