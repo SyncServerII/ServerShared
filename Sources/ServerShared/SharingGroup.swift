@@ -41,6 +41,9 @@ public class FileGroupSummary: Codable {
     
     // Has the file group been deleted?
     public var deleted: Bool!
+    
+    // Of all the files in the file group, gives the maximum file version.
+    public var fileVersion: FileVersionInt!
 }
 
 public class SharingGroupUser : Codable {
