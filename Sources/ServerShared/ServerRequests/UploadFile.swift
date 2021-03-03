@@ -47,6 +47,11 @@ public class UploadFileRequest : RequestMessage, NeedingRequestBodyData {
     public var changeResolverName: String?
     
     public var fileLabel: String?
+    
+    // An identifier for this N of M batch of uploads.
+    public var batchUUID: String!
+    // When should this batch of uploads be removed because it's stale.
+    public var batchExpiryDate: Date!
 
     // MARK: Properties NOT used by the client in the request message. The request body is copied into these by the server.
     
@@ -67,12 +72,18 @@ public class UploadFileRequest : RequestMessage, NeedingRequestBodyData {
         case changeResolverName
         case objectType
         case fileLabel
+        case batchUUID
+        case batchExpiryDate
     }
     
     public func valid() -> Bool {
         guard fileUUID != nil && sharingGroupUUID != nil, uploadIndex != nil, uploadCount != nil,
             let _ = NSUUID(uuidString: self.fileUUID),
             let _ = NSUUID(uuidString: self.sharingGroupUUID) else {
+            return false
+        }
+        
+        guard batchUUID != nil && batchExpiryDate != nil else {
             return false
         }
         
