@@ -77,13 +77,14 @@ public class UploadFileRequest : RequestMessage, NeedingRequestBodyData {
     }
     
     public func valid() -> Bool {
-        guard fileUUID != nil && sharingGroupUUID != nil, uploadIndex != nil, uploadCount != nil,
+        guard fileUUID != nil && sharingGroupUUID != nil, uploadIndex != nil, uploadCount != nil, batchUUID != nil,
             let _ = NSUUID(uuidString: self.fileUUID),
-            let _ = NSUUID(uuidString: self.sharingGroupUUID) else {
+            let _ = NSUUID(uuidString: self.sharingGroupUUID),
+            let _ = NSUUID(uuidString: self.batchUUID) else {
             return false
         }
         
-        guard batchUUID != nil && batchExpiryDate != nil else {
+        guard batchExpiryDate != nil else {
             return false
         }
         
