@@ -1,5 +1,8 @@
 ServerShared
 
+Version 0.5.1 (3/3/21)
+	Fixed conversion issue.
+
 Version 0.5.0 (3/3/21)
 	Changed batch expiry to a relative interval instead of a client specific date.
 	

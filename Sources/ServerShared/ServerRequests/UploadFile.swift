@@ -51,6 +51,7 @@ public class UploadFileRequest : RequestMessage, NeedingRequestBodyData {
     // An identifier for this N of M batch of uploads.
     public var batchUUID: String!
     // When should this batch of uploads be removed because it's stale. Added to the current date on the server.
+    private static let batchExpiryIntervalKey = "batchExpiryInterval"
     public var batchExpiryInterval: TimeInterval!
 
     // MARK: Properties NOT used by the client in the request message. The request body is copied into these by the server.
@@ -115,6 +116,8 @@ public class UploadFileRequest : RequestMessage, NeedingRequestBodyData {
         // Unfortunate customization due to https://bugs.swift.org/browse/SR-5249        
         MessageDecoder.convert(key: uploadCountKey, dictionary: &result) {Int32($0)}
         MessageDecoder.convert(key: uploadIndexKey, dictionary: &result) {Int32($0)}
+        
+        MessageDecoder.convert(key: batchExpiryIntervalKey, dictionary: &result) {TimeInterval($0)}
 
         return result
     }
