@@ -1,5 +1,8 @@
 ServerShared
 
+Version 0.4.1 (3/3/21)
+    Add constraint to field for upload request.
+
 Version 0.4.0 (3/2/21)
     Add batch fields to upload request.
     
