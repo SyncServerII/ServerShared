@@ -50,8 +50,8 @@ public class UploadFileRequest : RequestMessage, NeedingRequestBodyData {
     
     // An identifier for this N of M batch of uploads.
     public var batchUUID: String!
-    // When should this batch of uploads be removed because it's stale.
-    public var batchExpiryDate: Date!
+    // When should this batch of uploads be removed because it's stale. Added to the current date on the server.
+    public var batchExpiryInterval: TimeInterval!
 
     // MARK: Properties NOT used by the client in the request message. The request body is copied into these by the server.
     
@@ -73,7 +73,7 @@ public class UploadFileRequest : RequestMessage, NeedingRequestBodyData {
         case objectType
         case fileLabel
         case batchUUID
-        case batchExpiryDate
+        case batchExpiryInterval
     }
     
     public func valid() -> Bool {
@@ -84,7 +84,7 @@ public class UploadFileRequest : RequestMessage, NeedingRequestBodyData {
             return false
         }
         
-        guard batchExpiryDate != nil else {
+        guard batchExpiryInterval != nil else {
             return false
         }
         
