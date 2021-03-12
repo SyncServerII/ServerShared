@@ -1,5 +1,8 @@
 ServerShared
 
+Version 0.6.0 (3/11/21)
+	Added gif mime type.
+	
 Version 0.5.1 (3/3/21)
 	Fixed conversion issue.
 

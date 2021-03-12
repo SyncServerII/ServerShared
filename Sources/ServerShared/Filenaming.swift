@@ -19,6 +19,8 @@ public enum MimeType: String, Codable, CaseIterable {
     
     case mov = "video/quicktime"
     
+    case gif = "image/gif"
+    
     // This is really an error state. Use it with care.
     case unknown = "unknown"
     
@@ -34,6 +36,8 @@ public enum MimeType: String, Codable, CaseIterable {
             return "url"
         case .mov:
             return "mov"
+        case .gif:
+            return "gif"
             
         case .unknown:
             return Self.unknownExtension
