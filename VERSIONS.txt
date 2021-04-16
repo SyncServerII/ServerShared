@@ -1,5 +1,8 @@
 ServerShared
 
+Version 0.7.0 (4/15/21)
+	Added parameter to redeem invitation response: Was a user created?
+
 Version 0.6.0 (3/11/21)
 	Added gif mime type.
 	

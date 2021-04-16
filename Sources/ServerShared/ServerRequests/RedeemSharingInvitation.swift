@@ -33,7 +33,11 @@ public class RedeemSharingInvitationRequest : RequestMessage {
 
 public class RedeemSharingInvitationResponse : ResponseMessage {
     required public init() {}
-
+    
+    // Was a new user created as part of the process of redeeming the sharing invitation?
+    public var userCreated: Bool!
+    private static let userCreatedKey = "userCreated"
+    
     // Present only as means to help clients uniquely identify users. This is *never* passed back to the server. This id is unique across all users and is not specific to any sign-in type (e.g., Google).
     // This is present in both the case of adding a new user and redeeming the invitation by an existing user.
     public var userId:UserId!
@@ -49,6 +53,7 @@ public class RedeemSharingInvitationResponse : ResponseMessage {
     private static func customConversions(dictionary: [String: Any]) -> [String: Any] {
         var result = dictionary
         MessageDecoder.convert(key: userIdKey, dictionary: &result) {UserId($0)}
+        MessageDecoder.convert(key: userCreatedKey, dictionary: &result) {Bool($0)}
         return result
     }
     
