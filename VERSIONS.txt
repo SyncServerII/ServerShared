@@ -1,5 +1,8 @@
 ServerShared
 
+Version 0.8.0 (5/10/21)
+	Added `deleted` field to SharingGroupUser.
+	
 Version 0.7.0 (4/15/21)
 	Added parameter to redeem invitation response: Was a user created?
 

@@ -53,4 +53,7 @@ public class SharingGroupUser : Codable {
     
     // Present so that a client call omit themselves from a list of sharing group users presented in the UI.
     public var userId:UserId!
+    
+    // Has the user been removed from the sharing group?
+    public var deleted: Bool!
 }
