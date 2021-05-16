@@ -42,7 +42,7 @@ public class IndexResponse : ResponseMessage {
     // The files in the requested sharing group. This is returned only if you gave a sharing group id in the request.
     public var fileIndex:[FileInfo]?
     
-    // The sharing groups in which this user is a member. Each `SharingGroup` has a `contentsSummary` only if you did *not* give a sharing group id in the request.
+    // The sharing groups in which this user is a member. Each `SharingGroup` has a `contentsSummary` only if you did *not* give a sharing group id in the request. If the user had been a member of the sharing group, but is no longer a member, that sharing group has it's `deleted` property set to true. The `deleted` property is also set to true for sharing groups that have been completely deleted from the system.
     public var sharingGroups:[SharingGroup]!
     
     public static func decode(_ dictionary: [String: Any]) throws -> IndexResponse {

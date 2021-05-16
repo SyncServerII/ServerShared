@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Remove sharing group. Independent of whether or not any users are still in the sharing group.
 public class RemoveSharingGroupRequest : RequestMessage {
     required public init() {}
     

@@ -1,5 +1,8 @@
 ServerShared
 
+Version
+	Added comments.
+	
 Version 0.8.0 (5/10/21)
 	Added `deleted` field to SharingGroupUser.
 	
