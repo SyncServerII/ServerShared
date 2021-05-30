@@ -124,7 +124,7 @@ public class UploadFileRequest : RequestMessage, NeedingRequestBodyData {
         
         MessageDecoder.convert(key: batchExpiryIntervalKey, dictionary: &result) {TimeInterval($0)}
         
-        MessageDecoder.convert(key: informAllButSelfKey, dictionary: &result) {Bool($0)}
+        MessageDecoder.convertBool(key: informAllButSelfKey, dictionary: &result)
 
         return result
     }
