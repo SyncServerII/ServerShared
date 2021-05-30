@@ -55,7 +55,7 @@ public class UploadFileRequest : RequestMessage, NeedingRequestBodyData {
     public var batchExpiryInterval: TimeInterval!
 
     // What users should be informed about this file change? If this is nil, no users should be informed. If it is non-nil, the value will always be `true`. A user id is not given (e.g., `allButUserId`) because the userId for self can always be identified by the server-- it's the user making the upload request.
-    private static let informAllButSelfKey = "allButSelf"
+    private static let informAllButSelfKey = "informAllButSelf"
     public var informAllButSelf:Bool?
 
     // MARK: Properties NOT used by the client in the request message. The request body is copied into these by the server.

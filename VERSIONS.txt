@@ -1,5 +1,8 @@
 ServerShared
 
+Version 0.9.1 (5/29/21)
+	Fix informAllButSelf field issue.
+
 Version 0.9.0 (5/29/21)
 	Added comments. Added informAllButSelf to UploadRequest and FileGroupSummary.
 	
