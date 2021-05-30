@@ -54,6 +54,10 @@ public class UploadFileRequest : RequestMessage, NeedingRequestBodyData {
     private static let batchExpiryIntervalKey = "batchExpiryInterval"
     public var batchExpiryInterval: TimeInterval!
 
+    // What users should be informed about this file change? If this is nil, no users should be informed. If it is non-nil, the value will always be `true`. A user id is not given (e.g., `allButUserId`) because the userId for self can always be identified by the server-- it's the user making the upload request.
+    private static let informAllButSelfKey = "allButSelf"
+    public var informAllButSelf:Bool?
+
     // MARK: Properties NOT used by the client in the request message. The request body is copied into these by the server.
     
     public var data:Data!
@@ -75,6 +79,7 @@ public class UploadFileRequest : RequestMessage, NeedingRequestBodyData {
         case fileLabel
         case batchUUID
         case batchExpiryInterval
+        case informAllButSelf
     }
     
     public func valid() -> Bool {
@@ -118,6 +123,8 @@ public class UploadFileRequest : RequestMessage, NeedingRequestBodyData {
         MessageDecoder.convert(key: uploadIndexKey, dictionary: &result) {Int32($0)}
         
         MessageDecoder.convert(key: batchExpiryIntervalKey, dictionary: &result) {TimeInterval($0)}
+        
+        MessageDecoder.convert(key: informAllButSelfKey, dictionary: &result) {Bool($0)}
 
         return result
     }

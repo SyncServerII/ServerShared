@@ -35,13 +35,27 @@ public class FileGroupSummary: Codable {
     public init() {}
     
     public var fileGroupUUID: String!
-    
-    // Of the file dates (both creationDate and updateDate), this gives the most recent date across all files in the file group. Not given if the file group has been deleted.
-    public var mostRecentDate: Date?
-    
+
     // Has the file group been deleted?
     public var deleted: Bool!
     
+    // Indicates that all but the current user, the user making the request for the FileIndex, should be informed of the specific change involved in this fileVersion for this file.
+    public struct InformAllButSelf: Codable {
+        public let fileVersion: FileVersionInt
+        public let fileUUID: String
+        
+        public init(fileVersion: FileVersionInt, fileUUID: String) {
+            self.fileVersion = fileVersion
+            self.fileUUID = fileUUID
+        }
+    }
+    
+    // Should the user requesting the `FileGroupSummary` should overtly be informed about these changes?
+    public var informAllButSelf: [InformAllButSelf]?
+    
+    // MARK: The remaining fields are deprecated.
+    // Of the file dates (both creationDate and updateDate), this gives the most recent date across all files in the file group. Not given if the file group has been deleted.
+    public var mostRecentDate: Date?
     // Of all the files in the file group, gives the maximum file version.
     public var fileVersion: FileVersionInt!
 }
