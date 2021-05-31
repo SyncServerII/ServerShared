@@ -39,19 +39,30 @@ public class FileGroupSummary: Codable {
     // Has the file group been deleted?
     public var deleted: Bool!
     
-    // Indicates that all but the current user, the user making the request for the FileIndex, should be informed of the specific change involved in this fileVersion for this file.
-    public struct InformAllButSelf: Codable {
+    // Indicates who should be informed of the specific change involved in this fileVersion for this file.
+    public struct Inform: Codable {
         public let fileVersion: FileVersionInt
         public let fileUUID: String
         
-        public init(fileVersion: FileVersionInt, fileUUID: String) {
+        public enum WhoToInform: String, Codable {
+            // Inform self (the user requesting this `FileGroupSummary`) about the change.
+            case `self`
+            
+            // Don't inform self about the change
+            case others
+        }
+        
+        public let inform: WhoToInform
+        
+        public init(fileVersion: FileVersionInt, fileUUID: String, inform: WhoToInform) {
             self.fileVersion = fileVersion
             self.fileUUID = fileUUID
+            self.inform = inform
         }
     }
     
-    // Should the user requesting the `FileGroupSummary` should overtly be informed about these changes?
-    public var informAllButSelf: [InformAllButSelf]?
+    // Who should be overtly informed about these changes?
+    public var inform: [Inform]?
     
     // MARK: The remaining fields are deprecated.
     // Of the file dates (both creationDate and updateDate), this gives the most recent date across all files in the file group. Not given if the file group has been deleted.
