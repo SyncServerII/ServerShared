@@ -1,5 +1,8 @@
 ServerShared
 
+Version 0.10.1 (6/1/21)
+    Added mostRecentDate field to SharingGroup
+    
 Version 0.10.0 (6/1/21)
     Added numberOfDaysUntilInformAllButSelfExpiry constant.
     
