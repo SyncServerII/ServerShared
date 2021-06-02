@@ -1,5 +1,8 @@
 ServerShared
 
+Version 0.10.0 (6/1/21)
+    Added numberOfDaysUntilInformAllButSelfExpiry constant.
+    
 Version 0.9.3 (5/30/21)
 	Restructure FileGroupSummary to span both inform self and inform others because of the need to exclude not informing anyone.
 
