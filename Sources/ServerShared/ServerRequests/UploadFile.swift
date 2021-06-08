@@ -9,6 +9,7 @@
 import Foundation
 
 // Upload files and for v0 files tacitly creates new file groups. A new file group is created when you: (a) upload a v0 file and (b) give a new fileGroupUUID. A new fileGroupUUID is one not used for any prior v0 upload.
+// If you try to upload a new file in a file group but use an *existing* fileLabel, the upload request fails with `HTTPStatusCode.conflict` (409).
 
 public class UploadFileRequest : RequestMessage, NeedingRequestBodyData {    
     required public init() {}
@@ -19,6 +20,7 @@ public class UploadFileRequest : RequestMessage, NeedingRequestBodyData {
     public var fileUUID:String!
     
     // If given, must be with version 0 of a file. Cannot be non-nil after version 0.
+    // If an upload of a v0 file is done for an existing file group, then if the owning user of original files in the file group is not the same as the current uploading user, it will be switched on the server to the orginal owning user. This enables migrations to be carried out where files are added to file groups by other users, but owned by the original owning user.
     public var fileGroupUUID:String?
     
     // The type of object represented by a group of files.
