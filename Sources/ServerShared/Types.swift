@@ -23,6 +23,7 @@ public enum HTTPStatus : Int {
     case ok = 200
     case unauthorized = 401
     case forbidden = 403
+    case conflict = 409
     case gone = 410
     case serviceUnavailable = 503
 }
