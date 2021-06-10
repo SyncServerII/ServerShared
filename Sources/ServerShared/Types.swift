@@ -112,9 +112,12 @@ public struct ConflictReason: Codable {
     
     // There is a conflict with a UUID and here's the replacement if non-nil
     public let replacingUUID: String?
+    // Also pass back the file version along with the UUID.
+    public let serverFileVersion: FileVersionInt?
     
-    public init(replacingUUID: String?) {
+    public init(replacingUUID: String?, serverFileVersion: FileVersionInt?) {
         self.replacingUUID = replacingUUID
+        self.serverFileVersion = serverFileVersion
     }
 }
 

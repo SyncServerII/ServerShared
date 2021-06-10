@@ -1,5 +1,8 @@
 ServerShared
 
+Version 0.10.7 (6/9/21)
+    Add serverFileVersion to ConflictReason.
+    
 Version 0.10.6 (6/9/21)
     Fix type for ConflictReason UUID
     
