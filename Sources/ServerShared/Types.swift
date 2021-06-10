@@ -110,6 +110,10 @@ public enum GoneReason: String {
 public struct ConflictReason: Codable {
     // There is a conflict with a UUID and here's the replacement if non-nil
     public let replacingUUID: UUID?
+    
+    public init(replacingUUID: UUID?) {
+        self.replacingUUID = replacingUUID
+    }
 }
 
 public enum DeferredUploadStatus: String, Codable {

@@ -1,5 +1,8 @@
 ServerShared
 
+Verssion 0.10.4 (6/9/21)
+    Add public constructor to ConflictReason
+    
 Version 0.10.3 (6/9/21)
     Added ConflictReason
     
