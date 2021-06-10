@@ -111,9 +111,9 @@ public struct ConflictReason: Codable {
     public static let conflictReasonKey = "conflictReason"
     
     // There is a conflict with a UUID and here's the replacement if non-nil
-    public let replacingUUID: UUID?
+    public let replacingUUID: String?
     
-    public init(replacingUUID: UUID?) {
+    public init(replacingUUID: String?) {
         self.replacingUUID = replacingUUID
     }
 }
