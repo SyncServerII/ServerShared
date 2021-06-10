@@ -108,6 +108,8 @@ public enum GoneReason: String {
 }
 
 public struct ConflictReason: Codable {
+    public static let conflictReasonKey = "conflictReason"
+    
     // There is a conflict with a UUID and here's the replacement if non-nil
     public let replacingUUID: UUID?
     
