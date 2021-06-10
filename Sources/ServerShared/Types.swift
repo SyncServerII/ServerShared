@@ -107,6 +107,11 @@ public enum GoneReason: String {
     case authTokenExpiredOrRevoked
 }
 
+public struct ConflictReason: Codable {
+    // There is a conflict with a UUID and here's the replacement if non-nil
+    public let replacingUUID: UUID?
+}
+
 public enum DeferredUploadStatus: String, Codable {
     case pendingChange
     case pendingDeletion
