@@ -17,8 +17,11 @@ public class GetUploadsResultsRequest : RequestMessage {
     public var deferredUploadId: Int64?
     private static let deferredUploadIdKey = "deferredUploadId"
     
+    public var batchUUID: String?
+    private static let batchUUIDKey = "batchUUID"
+    
     public func valid() -> Bool {
-        guard deferredUploadId != nil else {
+        guard deferredUploadId != nil || batchUUID != nil else {
             return false
         }
         
