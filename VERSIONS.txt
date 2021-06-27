@@ -1,5 +1,8 @@
 ServerShared
 
+Version 0.11.0 (6/26/21)
+    Add email address to AddUserRequest
+        
 Version 0.10.8 (6/21/21)
     Add batchUUID field to GetUploadsResultsRequest
         See https://github.com/SyncServerII/Neebla/issues/20

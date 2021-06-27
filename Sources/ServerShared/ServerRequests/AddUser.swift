@@ -15,12 +15,21 @@ public class AddUserRequest : RequestMessage {
     public var cloudFolderName:String?
     public static let maxCloudFolderNameLength = 256
     
+    // The new users email address.
+    public var emailAddress: String?
+    static let emailAddessMaxLength = 512
+
     // You can optionally give the initial sharing group, created for the user, a name.
     public var sharingGroupName: String?
     
     public var sharingGroupUUID:String!
     
     public func valid() -> Bool {
+        if let emailAddress = emailAddress {
+            if emailAddress.count > Self.emailAddessMaxLength {
+                return false
+            }
+        }
         return sharingGroupUUID != nil
     }
     
