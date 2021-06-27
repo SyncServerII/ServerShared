@@ -14,15 +14,21 @@ import Foundation
 
 public class RedeemSharingInvitationRequest : RequestMessage {
     required public init() {}
-
-    // No master version here: The client doesn't yet have information about relevant sharing group that it needs to keep up to date. So, why bother?
     
     public var sharingInvitationUUID:String!
 
     // This must be present when redeeming an invitation: a) using an owning account, and b) that owning account type needs a cloud storage folder (e.g., Google Drive).
     public var cloudFolderName:String?
     
+    // The new users email address.
+    public var emailAddress: String?
+    
     public func valid() -> Bool {
+        if let emailAddress = emailAddress {
+            if emailAddress.count > AddUserRequest.emailAddessMaxLength {
+                return false
+            }
+        }
         return sharingInvitationUUID != nil
     }
     
