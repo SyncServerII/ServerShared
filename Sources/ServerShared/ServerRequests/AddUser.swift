@@ -11,11 +11,11 @@ import Foundation
 public class AddUserRequest : RequestMessage {
     required public init() {}
 
-    // A root-level folder in the cloud file service. This is only used by some of the cloud file servces. E.g., Google Drive. It's not used by Dropbox.
+    // A root-level folder in the cloud file service. This is only used by some of the cloud file services. E.g., Google Drive. It's not used by Dropbox.
     public var cloudFolderName:String?
     public static let maxCloudFolderNameLength = 256
     
-    // The new users email address.
+    // The new users email address. Make every effort to populate this field-- we have occaisional need to contact the users of the system; without this we cannot do that.
     public var emailAddress: String?
     public static let emailAddessMaxLength = 512
 

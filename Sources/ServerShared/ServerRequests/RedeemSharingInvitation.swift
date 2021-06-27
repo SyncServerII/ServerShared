@@ -20,8 +20,8 @@ public class RedeemSharingInvitationRequest : RequestMessage {
     // This must be present when redeeming an invitation: a) using an owning account, and b) that owning account type needs a cloud storage folder (e.g., Google Drive).
     public var cloudFolderName:String?
     
-    // The new users email address.
-    public var emailAddress: String?
+    // The new users email address. Make every effort to populate this field-- we have occaisional need to contact the users of the system; without this we cannot do that.
+    public var emailAddress: String!
     
     public func valid() -> Bool {
         if let emailAddress = emailAddress {

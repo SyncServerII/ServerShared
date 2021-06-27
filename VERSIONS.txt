@@ -1,5 +1,8 @@
 ServerShared
 
+Version 0.11.3 (6/27/21)
+    Add email address to CheckCredsRequest.
+    
 Version 0.11.2 (6/26/21)
     Add email address to RedeemSharingInvitationRequest
 
