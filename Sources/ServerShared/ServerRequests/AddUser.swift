@@ -17,7 +17,7 @@ public class AddUserRequest : RequestMessage {
     
     // The new users email address.
     public var emailAddress: String?
-    static let emailAddessMaxLength = 512
+    public static let emailAddessMaxLength = 512
 
     // You can optionally give the initial sharing group, created for the user, a name.
     public var sharingGroupName: String?
