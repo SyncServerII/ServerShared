@@ -15,7 +15,7 @@ public class AddUserRequest : RequestMessage {
     public var cloudFolderName:String?
     public static let maxCloudFolderNameLength = 256
     
-    // The new users email address. Make every effort to populate this field-- we have occaisional need to contact the users of the system; without this we cannot do that.
+    // The new users email address. Make every effort to populate this field-- we have occaisional need to contact the users of the system; without this we cannot do that. See https://github.com/SyncServerII/ServerMain/issues/16
     public var emailAddress: String?
     public static let emailAddessMaxLength = 512
 
