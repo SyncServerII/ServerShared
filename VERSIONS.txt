@@ -1,5 +1,8 @@
 ServerShared
 
+Version 0.12.0 (7/3/21)
+    Add MoveFileGroups endpoint.
+
 Version 0.11.3 (6/27/21)
     Add email address to CheckCredsRequest.
     

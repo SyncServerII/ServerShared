@@ -115,6 +115,9 @@ public class ServerEndpoints {
     // Removes the calling user from the sharing group given in the request.
     public static let removeUserFromSharingGroup = ServerEndpoint("RemoveUserFromSharingGroup", method: .post, requestMessageType: RemoveUserFromSharingGroupRequest.self, authenticationLevel: .secondary, sharing: Sharing(minPermission: nil))
     
+    // Move file groups from one sharing group to another.
+    public static let moveFileGroupsFromSourceSharingGroupToTarget = ServerEndpoint("MoveFileGroupsFromSourceSharingGroupToTarget", method: .post, requestMessageType: MoveFileGroupsRequest.self, authenticationLevel: .secondary, sharing: Sharing(minPermission: .admin))
+    
     // MARK: Push Notifications
     
     public static let registerPushNotificationToken = ServerEndpoint("RegisterPushNotificationToken", method: .post, requestMessageType: RegisterPushNotificationTokenRequest.self, authenticationLevel: .secondary)
@@ -148,6 +151,7 @@ public class ServerEndpoints {
             ServerEndpoints.removeSharingGroup,
             ServerEndpoints.updateSharingGroup,
             ServerEndpoints.removeUserFromSharingGroup,
+            ServerEndpoints.moveFileGroupsFromSourceSharingGroupToTarget,
             
             ServerEndpoints.registerPushNotificationToken,
             ServerEndpoints.sendPushNotifications])
