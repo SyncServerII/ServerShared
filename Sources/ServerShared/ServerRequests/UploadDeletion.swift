@@ -1,5 +1,5 @@
 //
-//  DeleteFile.swift
+//  UploadDeletion.swift
 //  Server
 //
 //  Created by Christopher Prince on 2/18/17.
@@ -8,8 +8,8 @@
 
 import Foundation
 
-// When uploaded, this causes the file, or group of files, to be removed from cloud storage. The files are marked as deleted in the FileIndex.
-// An upload deletion request can be repeated for the same file/file group. This doesn't cause an error.
+// When uploaded, this causes the group of files to be removed from cloud storage. The files are marked as deleted in the FileIndex.
+// An upload deletion request can be repeated for the same file group. This doesn't cause an error.
 
 public class UploadDeletionRequest : RequestMessage {
     public required init() {
@@ -20,8 +20,7 @@ public class UploadDeletionRequest : RequestMessage {
     // *Must* be provided
     public var sharingGroupUUID: String!
 
-    // Exactly one of the following two *must* be provided. If the file has a file group, only the file group *must* be provided*. In this case, you are requesting that all files in the file group are deleted. Otherwise, you are requesting that an individual file (which isn't in a file group, and hence has a nil fileGroupUUID) is deleted.
-    public var fileUUID:String!
+    // Requesting that all files in the file group are deleted.
     public var fileGroupUUID: String!
 
     public func valid() -> Bool {
@@ -29,11 +28,7 @@ public class UploadDeletionRequest : RequestMessage {
             return false
         }
         
-        guard fileUUID != nil || fileGroupUUID != nil else {
-            return false
-        }
-        
-        if fileUUID != nil && fileGroupUUID != nil {
+        guard fileGroupUUID != nil else {
             return false
         }
         

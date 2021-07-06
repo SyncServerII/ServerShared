@@ -1,5 +1,8 @@
 ServerShared
 
+Version 0.12.1 (7/5/21)
+    Remove fileUUID option from UploadDeletionRequest. This goes along with requiring all uploads to now have a file group.
+
 Version 0.12.0 (7/3/21)
     Add MoveFileGroups endpoint.
 
