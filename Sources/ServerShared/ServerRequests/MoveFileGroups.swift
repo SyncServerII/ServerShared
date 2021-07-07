@@ -23,7 +23,7 @@ public class MoveFileGroupsRequest : RequestMessage {
     public var fileGroupUUIDs:[String]!
 
     // Where the file groups are currently.
-    public var sourceSharingGroupUUID: String!
+    public var sharingGroupUUID: String!
     
     // The place to move the file groups.
     public var destinationSharingGroupUUID: String!
@@ -44,7 +44,7 @@ public class MoveFileGroupsRequest : RequestMessage {
             }
         }
         
-        guard let sourceSharingGroupUUID = sourceSharingGroupUUID,
+        guard let sourceSharingGroupUUID = sharingGroupUUID,
             let destinationSharingGroupUUID = destinationSharingGroupUUID else {
             return false
         }
