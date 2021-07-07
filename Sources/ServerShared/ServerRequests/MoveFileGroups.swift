@@ -83,7 +83,7 @@ public class MoveFileGroupsResponse : ResponseMessage {
     required public init() {}
 
     public var responseType: ResponseType {
-        return .header
+        return .json
     }
 
     public enum MoveFileGroupsResult: String, Codable {

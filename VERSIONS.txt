@@ -1,5 +1,8 @@
 ServerShared
 
+Version 0.12.6 (7/6/21)
+    Fix issue with MoveFileGroupsResponse.
+    
 Version 0.12.5 (7/6/21)
     Fix other issues with MoveFileGroupsRequest.
     
