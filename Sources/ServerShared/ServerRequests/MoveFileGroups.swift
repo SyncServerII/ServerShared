@@ -13,6 +13,7 @@ import Foundation
 public class MoveFileGroupsRequest : RequestMessage {
     enum MoveFileGroupsError: Error {
         case noMainKey
+        case couldNotGetData
     }
     
     required public init() {}
@@ -60,13 +61,18 @@ public class MoveFileGroupsRequest : RequestMessage {
         guard let data = try? JSONEncoder().encode(self) else {
             return nil
         }
-         
-        return [Self.mainKey: data]
+        
+        let base64string = data.base64EncodedString()
+        return [Self.mainKey: base64string]
     }
 
     public static func decode(_ dictionary: [String: Any]) throws -> RequestMessage {
-        guard let data = dictionary[Self.mainKey] as? Data else {
+        guard let base64string = dictionary[Self.mainKey] as? String else {
             throw MoveFileGroupsError.noMainKey
+        }
+        
+        guard let data = Data(base64Encoded: base64string) else {
+            throw MoveFileGroupsError.couldNotGetData
         }
         
         return try JSONDecoder().decode(Self.self, from: data)

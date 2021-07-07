@@ -1,5 +1,8 @@
 ServerShared
 
+Version 0.12.3 (7/6/21)
+    Fix another issue with MoveFileGroupsRequest encoding/decoding.
+    
 Version 0.12.2 (7/6/21)
     Fix issue with MoveFileGroupsRequest encoding/decoding.
 
