@@ -105,4 +105,25 @@ final class ServerSharedTests: XCTestCase {
             return
         }
     }
+    
+    func testMoveFileGroupsRequest() throws {
+        let request1 = MoveFileGroupsRequest()
+        request1.fileGroupUUIDs = [UUID().uuidString]
+        request1.sourceSharingGroupUUID = UUID().uuidString
+        request1.destinationSharingGroupUUID = UUID().uuidString
+        
+        guard let dict = request1.toDictionary else {
+            XCTFail()
+            return
+        }
+
+        guard let request2 = try MoveFileGroupsRequest.decode(dict) as? MoveFileGroupsRequest else {
+            XCTFail()
+            return
+        }
+        
+        XCTAssert(request2.fileGroupUUIDs == request1.fileGroupUUIDs)
+        XCTAssert(request2.sourceSharingGroupUUID == request1.sourceSharingGroupUUID)
+        XCTAssert(request2.destinationSharingGroupUUID == request1.destinationSharingGroupUUID)
+    }
 }

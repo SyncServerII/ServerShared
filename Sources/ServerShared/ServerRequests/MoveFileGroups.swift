@@ -11,6 +11,10 @@ import Foundation
 // See https://github.com/SyncServerII/Neebla/issues/23
 
 public class MoveFileGroupsRequest : RequestMessage {
+    enum MoveFileGroupsError: Error {
+        case noMainKey
+    }
+    
     required public init() {}
 
     // MARK: Properties for use in request message.
@@ -23,20 +27,49 @@ public class MoveFileGroupsRequest : RequestMessage {
     // The place to move the file groups.
     public var destinationSharingGroupUUID: String!
     
+    // This request is really exemplifying why I need to move away from purely URL encoded request parameters. `fileGroupUUIDs` doesn't encode using my method. I end with a dictionary:
+    // queryDict: ["destinationSharingGroupUUID": "DADB4C1F-3F53-4D48-BE19-3A63E921BA6A", "fileGroupUUIDs": "[\"Foobar\"]", "sourceSharingGroupUUID": "BDDF3550-8626-4743-84B8-49CAE3ECC70F"]
+    // I need to move generally to using the Codable and the request body.
+    static let mainKey = "main"
+    
     public func valid() -> Bool {
         guard let fileGroupUUIDs = fileGroupUUIDs, fileGroupUUIDs.count > 0 else {
             return false
         }
         
-        guard sourceSharingGroupUUID != nil && destinationSharingGroupUUID != nil else {
+        for fileGroupUUID in fileGroupUUIDs {
+            guard let _ = UUID(uuidString: fileGroupUUID) else {
+                return false
+            }
+        }
+        
+        guard let sourceSharingGroupUUID = sourceSharingGroupUUID,
+            let destinationSharingGroupUUID = destinationSharingGroupUUID else {
+            return false
+        }
+        
+        guard let _ = UUID(uuidString: sourceSharingGroupUUID),
+            let _ = UUID(uuidString: destinationSharingGroupUUID) else {
             return false
         }
         
         return true
     }
+    
+    public var toDictionary: [String: Any]?  {
+        guard let data = try? JSONEncoder().encode(self) else {
+            return nil
+        }
+         
+        return [Self.mainKey: data]
+    }
 
     public static func decode(_ dictionary: [String: Any]) throws -> RequestMessage {
-        return try MessageDecoder.decode(MoveFileGroupsRequest.self, from: dictionary)
+        guard let data = dictionary[Self.mainKey] as? Data else {
+            throw MoveFileGroupsError.noMainKey
+        }
+        
+        return try JSONDecoder().decode(Self.self, from: data)
     }
 }
 
