@@ -88,6 +88,8 @@ public class MoveFileGroupsResponse : ResponseMessage {
 
     public enum MoveFileGroupsResult: String, Codable {
         case success
+        
+        // Not all of the v0 uploaders of the file groups given in the request were members of the target sharing group.
         case failedWithNotAllOwnersInTarget
     }
     
