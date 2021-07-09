@@ -112,15 +112,9 @@ final class ServerSharedTests: XCTestCase {
         request1.sourceSharingGroupUUID = UUID().uuidString
         request1.destinationSharingGroupUUID = UUID().uuidString
         
-        guard let dict = request1.toDictionary else {
-            XCTFail()
-            return
-        }
+        request1.data =  try JSONEncoder().encode(request1)
 
-        guard let request2 = try MoveFileGroupsRequest.decode(dict) as? MoveFileGroupsRequest else {
-            XCTFail()
-            return
-        }
+        let request2 = try MoveFileGroupsRequest.decode(data: request1.data)
         
         XCTAssert(request2.fileGroupUUIDs == request1.fileGroupUUIDs)
         XCTAssert(request2.sourceSharingGroupUUID == request1.sourceSharingGroupUUID)

@@ -10,9 +10,12 @@ import Foundation
 // Move file groups (album items) from one sharing group (album) to another.
 // See https://github.com/SyncServerII/Neebla/issues/23
 
-public class MoveFileGroupsRequest : RequestMessage {
+// This request is really exemplifying why I need to move away from purely URL encoded request parameters. `fileGroupUUIDs` doesn't encode using my method. I end with a dictionary:
+// queryDict: ["destinationSharingGroupUUID": "DADB4C1F-3F53-4D48-BE19-3A63E921BA6A", "fileGroupUUIDs": "[\"Foobar\"]", "sourceSharingGroupUUID": "BDDF3550-8626-4743-84B8-49CAE3ECC70F"]
+// I need to move generally to using the Codable and the request body.
+    
+public class MoveFileGroupsRequest : RequestMessage, NeedingRequestBodyData {
     enum MoveFileGroupsError: Error {
-        case noMainKey
         case couldNotGetData
     }
     
@@ -27,13 +30,25 @@ public class MoveFileGroupsRequest : RequestMessage {
     
     // The place to move the file groups.
     public var destinationSharingGroupUUID: String!
+
+    // Eliminate data and sizeOfDataIn bytes from Codable coding
+    private enum CodingKeys: String, CodingKey {
+        case fileGroupUUIDs
+        case sourceSharingGroupUUID
+        case destinationSharingGroupUUID
+    }
     
-    // This request is really exemplifying why I need to move away from purely URL encoded request parameters. `fileGroupUUIDs` doesn't encode using my method. I end with a dictionary:
-    // queryDict: ["destinationSharingGroupUUID": "DADB4C1F-3F53-4D48-BE19-3A63E921BA6A", "fileGroupUUIDs": "[\"Foobar\"]", "sourceSharingGroupUUID": "BDDF3550-8626-4743-84B8-49CAE3ECC70F"]
-    // I need to move generally to using the Codable and the request body.
-    static let mainKey = "main"
+    // MARK: Properties NOT used by the client in the request message. The request body is copied into these by the server.
     
+    public var data: Data!
+    public var sizeOfDataInBytes: Int!
+    
+    // FAKE
     public func valid() -> Bool {
+        return true
+    }
+    
+    public func reallyValid() -> Bool {
         guard let fileGroupUUIDs = fileGroupUUIDs, fileGroupUUIDs.count > 0 else {
             return false
         }
@@ -58,23 +73,18 @@ public class MoveFileGroupsRequest : RequestMessage {
     }
     
     public var toDictionary: [String: Any]?  {
-        guard let data = try? JSONEncoder().encode(self) else {
-            return nil
-        }
-        
-        let base64string = data.base64EncodedString()
-        return [Self.mainKey: base64string]
+        return nil
     }
 
     public static func decode(_ dictionary: [String: Any]) throws -> RequestMessage {
-        guard let base64string = dictionary[Self.mainKey] as? String else {
-            throw MoveFileGroupsError.noMainKey
-        }
-        
-        guard let data = Data(base64Encoded: base64string) else {
+        // Fake
+        return MoveFileGroupsRequest()
+    }
+    
+    public static func decode(data: Data!) throws -> MoveFileGroupsRequest {
+        guard let data = data else {
             throw MoveFileGroupsError.couldNotGetData
         }
-        
         return try JSONDecoder().decode(Self.self, from: data)
     }
 }
