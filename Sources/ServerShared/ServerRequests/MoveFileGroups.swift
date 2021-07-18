@@ -106,6 +106,9 @@ public class MoveFileGroupsResponse : ResponseMessage {
         
         // Not all of the v0 uploaders of the file groups given in the request were members of the target sharing group.
         case failedWithNotAllOwnersInTarget
+        
+        // A `usersThatMustBeInDestination` field was passed in the request, but not all users that were still in the source sharing group were in the destination.
+        case failedWithUserConstraintNotSatisfied
     }
     
     public var result: MoveFileGroupsResult!
