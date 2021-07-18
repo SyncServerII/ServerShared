@@ -23,7 +23,11 @@ public class MoveFileGroupsRequest : RequestMessage, NeedingRequestBodyData {
 
     // MARK: Properties for use in request message.
     
+    // The file groups being moved from source sharing group to destination.
     public var fileGroupUUIDs:[String]!
+    
+    // The server will ensure that all of these users are in the destination group if the user is still a member of the source sharing group.
+    public var usersThatMustBeInDestination: Set<UserId>!
 
     // Where the file groups are currently.
     public var sourceSharingGroupUUID: String!
@@ -36,6 +40,7 @@ public class MoveFileGroupsRequest : RequestMessage, NeedingRequestBodyData {
         case fileGroupUUIDs
         case sourceSharingGroupUUID
         case destinationSharingGroupUUID
+        case usersThatMustBeInDestination
     }
     
     // MARK: Properties NOT used by the client in the request message. The request body is copied into these by the server.

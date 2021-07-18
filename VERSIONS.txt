@@ -1,5 +1,8 @@
 ServerShared
 
+Version 0.12.8 (7/18/21)
+    Added usersThatMustBeInDestination field to MoveFileGroupsRequest.
+
 Version 0.12.7 (7/6/21)
     Another change to MoveFileGroupsRequest.
     

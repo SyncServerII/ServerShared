@@ -111,6 +111,7 @@ final class ServerSharedTests: XCTestCase {
         request1.fileGroupUUIDs = [UUID().uuidString]
         request1.sourceSharingGroupUUID = UUID().uuidString
         request1.destinationSharingGroupUUID = UUID().uuidString
+        request1.usersThatMustBeInDestination = [1]
         
         request1.data =  try JSONEncoder().encode(request1)
 
@@ -119,5 +120,6 @@ final class ServerSharedTests: XCTestCase {
         XCTAssert(request2.fileGroupUUIDs == request1.fileGroupUUIDs)
         XCTAssert(request2.sourceSharingGroupUUID == request1.sourceSharingGroupUUID)
         XCTAssert(request2.destinationSharingGroupUUID == request1.destinationSharingGroupUUID)
+        XCTAssert(request2.usersThatMustBeInDestination == [1])
     }
 }
