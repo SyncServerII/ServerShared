@@ -1,5 +1,8 @@
 ServerShared
 
+Version 0.12.10 (7/18/21)
+    Made usersThatMustBeInDestination explicitly optional.
+    
 Version 0.12.9 (7/18/21)
     Added option to MoveFileGroupsResponse.
     

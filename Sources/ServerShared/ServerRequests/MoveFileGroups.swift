@@ -26,8 +26,8 @@ public class MoveFileGroupsRequest : RequestMessage, NeedingRequestBodyData {
     // The file groups being moved from source sharing group to destination.
     public var fileGroupUUIDs:[String]!
     
-    // The server will ensure that all of these users are in the destination group if the user is still a member of the source sharing group.
-    public var usersThatMustBeInDestination: Set<UserId>!
+    // The server will ensure that all of these users are in the destination group if the user is still a member of the source sharing group. This is optional and can be given as nil.
+    public var usersThatMustBeInDestination: Set<UserId>?
 
     // Where the file groups are currently.
     public var sourceSharingGroupUUID: String!
