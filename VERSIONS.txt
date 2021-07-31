@@ -1,5 +1,8 @@
 ServerShared
 
+Version 0.13.0 (7/31/21)
+    Added Solid (Pod) to account types
+    
 Version 0.12.10 (7/18/21)
     Made usersThatMustBeInDestination explicitly optional.
     

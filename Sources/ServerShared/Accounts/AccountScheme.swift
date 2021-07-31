@@ -37,6 +37,7 @@ public struct AccountScheme: Equatable {
     
     public static let google = AccountScheme(name: "Google", authTokenType: "GoogleToken", userType: .owning)
     public static let dropbox = AccountScheme(name: "Dropbox", authTokenType: "DropboxToken", userType: .owning)
+    public static let solid = AccountScheme(name: "Solid", authTokenType: "SolidToken", userType: .owning)
     public static let facebook = AccountScheme(name: "Facebook", authTokenType: "FacebookToken", userType: .sharing)
     public static let microsoft = AccountScheme(name: "Microsoft", authTokenType: "MicrosoftToken", userType: .owning)
     public static let appleSignIn = AccountScheme(name: "AppleSignIn", authTokenType: "AppleSignInToken", userType: .sharing)
