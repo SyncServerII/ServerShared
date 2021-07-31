@@ -1,5 +1,8 @@
 ServerShared
 
+Version 0.13.1 (7/31/21)
+    Added HTTPIdTokenKey
+    
 Version 0.13.0 (7/31/21)
     Added Solid (Pod) to account types
     
