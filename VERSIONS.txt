@@ -1,5 +1,8 @@
 ServerShared
 
+Version 0.13.2 (8/5/21)
+    Added v0DuplicateFileUpload
+    
 Version 0.13.1 (7/31/21)
     Added HTTPIdTokenKey
     

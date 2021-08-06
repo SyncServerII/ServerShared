@@ -181,7 +181,13 @@ public class UploadFileResponse : ResponseMessage {
     
     public enum UploadsFinished: String, Codable, Equatable {
         case uploadsNotFinished
+        
+        // While a batch of uploads is still in process, indicates that an upload been repeated.
         case duplicateFileUpload
+        
+        // A batch of uploads completed, but a v0 upload was repeated.
+        case v0DuplicateFileUpload
+        
         case v0UploadsFinished
         case vNUploadsTransferPending
     }
