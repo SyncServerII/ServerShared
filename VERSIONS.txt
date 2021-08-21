@@ -1,5 +1,8 @@
 ServerShared
 
+Version 0.14.0 (8/21/21)
+    "Undeprecated" :) some constants. i.e., changed some comments.
+    
 Version 0.13.2 (8/5/21)
     Added v0DuplicateFileUpload
     
