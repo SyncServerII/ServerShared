@@ -1,5 +1,8 @@
 ServerShared
 
+Version 0.14.1 (9/12/21)
+    Added HTTPAccountStorageKey.
+
 Version 0.14.0 (8/21/21)
     "Undeprecated" :) some constants. i.e., changed some comments.
     

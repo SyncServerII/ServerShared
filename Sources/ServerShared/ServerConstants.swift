@@ -21,6 +21,9 @@ public class ServerConstants {
 
     /// Used by Apple Sign In. And Solid.
     public static let HTTPAccountDetailsKey = "X-account-details"
+    
+    // Used by Solid. The storage IRI.
+    public static let HTTPAccountStorageKey = "X-account-storage"
 
     // Microsoft has something, from iOS MSAL, they call an access token, but it's not a JWT.
     public static let HTTPMicrosoftAccessToken = "X-microsoft-access-token"
